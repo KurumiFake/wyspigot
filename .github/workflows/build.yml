@@ -1,0 +1,29 @@
+name: Build
+on: [ push ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gradle/wrapper-validation-action@v1
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 8
+      - name: Configure Git
+        run: git config --global user.email "no-reply@github.com" && git config --global user.name "Github Actions"
+      - name: Apply patches
+        run: ./wyspigot patch
+      - name: Build
+        run: ./wyspigot jar
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%H:%M %m/%d/%Y')"
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{ steps.version.outputs.mcversion }}"
+          prerelease: false
+          title: "WYSpIgot Release ${{ steps.date.outputs.date }}"
+          files: ./target/wyspigot-paperclip.jar
