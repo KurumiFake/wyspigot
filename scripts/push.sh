@@ -8,7 +8,7 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 . $(dirname $SOURCE)/init.sh
 
-minecraftversion=$(cat $basedir/TacoSpigot/Paper/work/BuildData/info.json | grep minecraftVersion | cut -d '"' -f 4)
+minecraftversion=1.8.8
 
 basedir
 pushRepo ${FORK_NAME}-API $API_REPO master:$minecraftversion

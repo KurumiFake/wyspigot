@@ -6,7 +6,7 @@
 (
 set -e
 basedir="$(cd "$1" && pwd -P)"
-workdir="$basedir/TacoSpigot/Paper/work"
+workdir="$basedir/Paper/work"
 localworkdir="$basedir/work"
 mcver=1.8.8
 paperjar="$basedir/WYSpIgot-Server/target/wyspigot-$mcver.jar"

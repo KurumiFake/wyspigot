@@ -10,10 +10,10 @@ done
 
 
 cd $basedir
-tacospigotVer=$(cat current-tacospigot)
+paperVer=$(cat current-paper)
 
-minecraftversion=$(cat $basedir/TacoSpigot/Paper/work/BuildData/info.json | grep minecraftVersion | cut -d '"' -f 4)
-decompile="TacoSpigot/Paper/work/Minecraft/$minecraftversion"
+minecraftversion=$(cat $basedir/Paper/work/BuildData/info.json | grep minecraftVersion | cut -d '"' -f 4)
+decompile="Paper/work/Minecraft/$minecraftversion"
 
 mkdir -p mc-dev/src/net/minecraft/server
 
@@ -25,7 +25,7 @@ fi
 rm src/net/minecraft/server/*.java
 cp -r $basedir/$decompile/net/minecraft/server/* src/net/minecraft/server
 
-base="$basedir/TacoSpigot/TacoSpigot-Server/src/main/java/net/minecraft/server"
+base="$basedir/Paper/Paper-Server/src/main/java/net/minecraft/server"
 cd $basedir/mc-dev/src/net/minecraft/server/
 for file in $(/bin/ls $base)
 do
@@ -36,5 +36,5 @@ done
 cd $basedir/mc-dev
 git add . -A
 git commit . -m "mc-dev"
-git tag -a "$tacospigotVer" -m "$tacospigotVer" 2>/dev/null
-pushRepo . $MCDEV_REPO $tacospigotVer
+git tag -a "$paperVer" -m "$paperVer" 2>/dev/null
+pushRepo . $MCDEV_REPO $paperVer
