@@ -5,7 +5,7 @@ Subject: [PATCH] pom changes
 
 
 diff --git a/pom.xml b/pom.xml
-index fe9d6d265b686ae1c373e4fdcd202b16673366f1..a318348b7290ee46e80f0be404c8dffa472dd8f6 100644
+index fe9d6d265b686ae1c373e4fdcd202b16673366f1..f431b5f5bbef0229c1b628e005b2866afeeada77 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -4,18 +4,18 @@
@@ -43,7 +43,7 @@ index fe9d6d265b686ae1c373e4fdcd202b16673366f1..a318348b7290ee46e80f0be404c8dffa
              <groupId>com.google.guava</groupId>
              <artifactId>guava</artifactId>
 -            <version>17.0</version>
-+            <version>27.1-jre</version>
++            <version>26.0-jre</version>
              <scope>compile</scope>
          </dependency>
 -        <!-- bundled with Minecraft, should be kept in sync -->

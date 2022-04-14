@@ -5,7 +5,7 @@ Subject: [PATCH] update dependencies - wave 1
 
 
 diff --git a/pom.xml b/pom.xml
-index c2b5a410be0a1b1ff1a9bb8d72c55d4871e04d28..f9dd227febffd144a8a23cc1f996bce81a39c7b2 100644
+index c2b5a410be0a1b1ff1a9bb8d72c55d4871e04d28..68eaf9c55a6c17b00725dd0bc94d4fcc77a9a571 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -11,7 +11,7 @@
@@ -31,7 +31,7 @@ index c2b5a410be0a1b1ff1a9bb8d72c55d4871e04d28..f9dd227febffd144a8a23cc1f996bce8
              <groupId>net.sf.jopt-simple</groupId>
              <artifactId>jopt-simple</artifactId>
 -            <version>3.2</version>
-+            <version>3.3</version>
++            <version>5.0.4</version>
              <type>jar</type>
              <scope>compile</scope>
          </dependency>
