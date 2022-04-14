@@ -15,6 +15,7 @@ jobs:
       - name: Apply patches
         run: ./wyspigot patch
       - name: blak smok
+        continue-on-error: true
         run: tar -czf w.tar.gz WYSpIgot-*
       - uses: actions/upload-artifact@v2
         continue-on-error: true

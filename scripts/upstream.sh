@@ -22,7 +22,7 @@ fi
 tacospigotVer=$(gethead TacoSpigot)
 cd "$basedir/TacoSpigot/"
 
-./applyPatches.sh
+git submodule update --init && ./remap.sh && ./decompile.sh && ./init.sh && ./applyPatches.sh
 
 cd "TacoSpigot-Server"
 mcVer=$(mvn -o org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=minecraft_version | sed -n -e '/^\[.*\]/ !{ /^[0-9]/ { p; q } }')
