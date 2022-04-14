@@ -92,12 +92,10 @@ for f in $files; do
     fi
 done
 
-import BlockState
-import BlockStateList
-import PacketPlayOutPlayerInfo
-import ShapeDetector
-import StructureBoundingBox
-import WorldGenCaves
+import LegacyPingHandler
+import PacketDecoder
+import PacketEncoder
+import PacketDataSerializer
 ########################################################
 ########################################################
 ########################################################
