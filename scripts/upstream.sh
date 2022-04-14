@@ -13,7 +13,7 @@ git submodule update --init --recursive
 if [[ "$1" == up* ]]; then
     (
         cd "$basedir/TacoSpigot/"
-		git fetch && git reset --hard origin/dev
+		git fetch && git reset --hard origin/version/1.8.8
         cd ../
         git add TacoSpigot
     )
