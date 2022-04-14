@@ -92,7 +92,12 @@ for f in $files; do
     fi
 done
 
-import *
+import Block*
+import Shape*
+import Packet*
+import Structure*
+import World*
+import Base*
 # ah yes wildcard import.
 ########################################################
 ########################################################
