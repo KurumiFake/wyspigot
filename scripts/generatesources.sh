@@ -25,7 +25,7 @@ fi
 rm src/net/minecraft/server/*.java
 cp -r $basedir/$decompile/net/minecraft/server/* src/net/minecraft/server
 
-base="$basedir/Paper/Paper-Server/src/main/java/net/minecraft/server"
+base="$basedir/Paper/PaperSpigot-Server/src/main/java/net/minecraft/server"
 cd $basedir/mc-dev/src/net/minecraft/server/
 for file in $(/bin/ls $base)
 do

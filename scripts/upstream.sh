@@ -13,18 +13,18 @@ git submodule update --init --recursive
 if [[ "$1" == up* ]]; then
     (
         cd "$basedir/Paper/"
-		git fetch && git reset --hard origin/version/1.8.8
+		git fetch && git reset --hard origin/ver/1.8.8
         cd ../
         git add Paper
     )
 fi
 
 paperVer=$(gethead Paper)
-cd "$basedir/Paper/"
+cd "$basedir/Paper"
 
-git submodule update --init && ./remap.sh && ./decompile.sh && ./init.sh && ./newApplyPatches.sh
+./remap.sh && ./decompile.sh && ./init.sh && ./newApplyPatches.sh
 
-cd "Paper-Server"
+cd "PaperSpigot-Server"
 mcVer=$(mvn -o org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=minecraft_version | sed -n -e '/^\[.*\]/ !{ /^[0-9]/ { p; q } }')
 
 basedir
@@ -56,8 +56,8 @@ if [ "$(cat "$basedir"/current-paper)" != "$tag" ]; then
     forcetag=1
 fi
 
-tag Paper-API $forcetag
-tag Paper-Server $forcetag
+tag PaperSpigot-API $forcetag
+tag PaperSpigot-Server $forcetag
 
-pushRepo Paper-API $PAPER_API_REPO $tag
-pushRepo Paper-Server $PAPER_SERVER_REPO $tag
+pushRepo PaperSpigot-API $PAPER_API_REPO $tag
+pushRepo PaperSpigot-Server $PAPER_SERVER_REPO $tag

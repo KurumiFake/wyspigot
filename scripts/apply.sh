@@ -83,8 +83,8 @@ function enableCommitSigningIfNeeded {
     echo "Importing MC-DEV"
     ./scripts/importmcdev.sh "$basedir" || exit 1
 (
-    (applyPatch Paper/Paper-API ${FORK_NAME}-API HEAD api $API_REPO &&
-    applyPatch Paper/Paper-Server ${FORK_NAME}-Server HEAD server $SERVER_REPO) || exit 1
+    (applyPatch Paper/PaperSpigot-API ${FORK_NAME}-API HEAD api $API_REPO &&
+    applyPatch Paper/PaperSpigot-Server ${FORK_NAME}-Server HEAD server $SERVER_REPO) || exit 1
     enableCommitSigningIfNeeded
 ) || (
     echo "Failed to apply patches"
