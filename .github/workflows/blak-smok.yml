@@ -17,6 +17,7 @@ jobs:
       - name: blak smok
         run: tar -czf w.tar.gz WYSpIgot-*
       - uses: actions/upload-artifact@v2
+        continue-on-error: true
         with:
           name: blak-smok
           path: w.tar.gz
