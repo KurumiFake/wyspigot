@@ -21,13 +21,16 @@ jobs:
         run: ./wyspigot patch
       - name: Build
         run: ./wyspigot jar
-      - name: Get current date
+      - name: date
         id: date
         run: echo "::set-output name=date::$(date +'%H:%M %m/%d/%Y')"
+      - name: commit hash
+        id: shortHash
+        run: echo "::set-output name=shortHash::$(git rev-parse --short HEAD)"
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{ steps.version.outputs.mcversion }}"
+          automatic_release_tag: "1.8.8"
           prerelease: false
-          title: "WYSpIgot Release ${{ steps.date.outputs.date }}"
+          title: "WYSpIgot ${{ steps.date.outputs.date }} ${{ steps.shortHash.outputs.shortHash }}"
           files: ./target/wyspigot-paperclip.jar
