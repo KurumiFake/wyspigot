@@ -3,9 +3,11 @@ From: KurumiFake <kurumiisshidowife@gmail.com>
 Date: Thu, 14 Apr 2022 06:12:05 +0000
 Subject: [PATCH] pom changes
 
+- rebrand
+- bump depndencies
 
 diff --git a/pom.xml b/pom.xml
-index b61d116d0910e81451bc39fd94c4144f0efc173e..f0d176d2665981415cd456058272f2dccb566f21 100644
+index b61d116d0910e81451bc39fd94c4144f0efc173e..a64655f3cd2ce57e1ccd6810d87864503c57edea 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -4,18 +4,18 @@
@@ -13,8 +15,9 @@ index b61d116d0910e81451bc39fd94c4144f0efc173e..f0d176d2665981415cd456058272f2dc
  
      <parent>
 -        <groupId>net.techcable.tacospigot</groupId>
+-        <artifactId>parent</artifactId>
 +        <groupId>me.kurumifake.wyspigot</groupId>
-         <artifactId>parent</artifactId>
++        <artifactId>wyspigot-parent</artifactId>
          <version>dev-SNAPSHOT</version>
      </parent>
  
