@@ -1,0 +1,97 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Thu, 14 Apr 2022 12:30:45 +0000
+Subject: [PATCH] rebrand
+
+
+diff --git a/pom.xml b/pom.xml
+index 644305e68a20f43286c917b15e04a43f05dce254..c2b5a410be0a1b1ff1a9bb8d72c55d4871e04d28 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -1,12 +1,12 @@
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+     <modelVersion>4.0.0</modelVersion>
+-    <groupId>org.github.paperspigot</groupId>
+-    <artifactId>paperspigot</artifactId>
++    <groupId>me.kurumifake.wyspigot</groupId>
++    <artifactId>wyspigot</artifactId>
+     <packaging>jar</packaging>
+     <version>1.8.8-R0.1-SNAPSHOT</version>
+-    <name>PaperSpigot</name>
+-    <url>https://hub.spigotmc.org/stash/projects/PAPER/</url>
++    <name>WYSSpIgot</name>
++    <url>https://github.com/KurumiFake/wyspigot</url>
+ 
+     <properties>
+         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+@@ -22,8 +22,8 @@
+     </properties>
+ 
+     <parent>
+-        <groupId>org.github.paperspigot</groupId>
+-        <artifactId>paperspigot-parent</artifactId>
++        <groupId>me.kurumifake.wyspigot</groupId>
++        <artifactId>wyspigot-parent</artifactId>
+         <version>dev-SNAPSHOT</version>
+         <relativePath>../pom.xml</relativePath>
+     </parent>
+@@ -35,8 +35,8 @@
+             <version>3.0.3</version>
+         </dependency>
+         <dependency>
+-            <groupId>org.github.paperspigot</groupId>
+-            <artifactId>paperspigot-api</artifactId>
++            <groupId>me.kurumifake.wyspigot</groupId>
++            <artifactId>wyspigot-api</artifactId>
+             <version>${project.version}</version>
+             <type>jar</type>
+             <scope>compile</scope>
+@@ -119,7 +119,7 @@
+             <artifactId>gitdescribe-maven-plugin</artifactId>
+             <version>1.3</version>
+             <configuration>
+-                <outputPrefix>git-PaperSpigot-</outputPrefix>
++                <outputPrefix>git-WYSpIgot-</outputPrefix>
+                 <scmDirectory>..</scmDirectory>
+             </configuration>
+             <executions>
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index b400ce04db4dfefaca9a040902bf2d5e50168b7f..c6c2b98cc9fca27ab04d7793ffcf4535b257fa50 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -1084,7 +1084,7 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+     }
+ 
+     public String getServerModName() {
+-        return "PaperSpigot"; // PaperSpigot - PaperSpigot > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
++        return "WYSpIgot"; // wyspigot // PaperSpigot - PaperSpigot > // Spigot - Spigot > // CraftBukkit - cb > vanilla!
+     }
+ 
+     public CrashReport b(CrashReport crashreport) {
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 69485fa696f27c965dd576d9cda7b4b56ef57032..5da37129f5739078f64c232c9b719b742ef32b7e 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -127,7 +127,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
+ 
+ public final class CraftServer implements Server {
+     private static final Player[] EMPTY_PLAYER_ARRAY = new Player[0];
+-    private final String serverName = "CraftBukkit";
++    private final String serverName = "WYSpIgot";
+     private final String serverVersion;
+     private final String bukkitVersion = Versioning.getBukkitVersion();
+     private final Logger logger = Logger.getLogger("Minecraft");
+diff --git a/src/main/java/org/spigotmc/Metrics.java b/src/main/java/org/spigotmc/Metrics.java
+index 558989ce7ed25c7c720b35d80abd428b2f39d1be..cf3fa5b90ce5ac684231bc9e5d4e52e0eb1e6029 100644
+--- a/src/main/java/org/spigotmc/Metrics.java
++++ b/src/main/java/org/spigotmc/Metrics.java
+@@ -344,7 +344,7 @@ public class Metrics {
+      */
+     private void postPlugin(final boolean isPing) throws IOException {
+         // Server software specific section
+-        String pluginName = "PaperSpigot"; // PaperSpigot - We need some usage data
++        String pluginName = "WYSpIgot"; // PaperSpigot - We need some usage data
+         boolean onlineMode = Bukkit.getServer().getOnlineMode(); // TRUE if online mode is enabled
+         String pluginVersion = (Metrics.class.getPackage().getImplementationVersion() != null) ? Metrics.class.getPackage().getImplementationVersion() : "unknown";
+         String serverVersion = Bukkit.getVersion();

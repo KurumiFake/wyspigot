@@ -1,0 +1,90 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Thu, 14 Apr 2022 12:34:15 +0000
+Subject: [PATCH] update dependencies - wave 1
+
+
+diff --git a/pom.xml b/pom.xml
+index c2b5a410be0a1b1ff1a9bb8d72c55d4871e04d28..55f120ef42279388d274022b2fe4efd7ab71e790 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -44,7 +44,7 @@
+         <dependency>
+             <groupId>org.apache.logging.log4j</groupId>
+             <artifactId>log4j-core</artifactId>
+-            <version>2.17.0</version> <!-- Paper - Update Log4j -->
++            <version>2.17.2</version> <!-- Paper - Update Log4j -->
+             <scope>compile</scope>
+         </dependency>
+         <dependency>
+@@ -57,7 +57,7 @@
+         <dependency>
+             <groupId>net.sf.jopt-simple</groupId>
+             <artifactId>jopt-simple</artifactId>
+-            <version>3.2</version>
++            <version>5.0.4</version>
+             <type>jar</type>
+             <scope>compile</scope>
+         </dependency>
+@@ -71,14 +71,14 @@
+         <dependency>
+             <groupId>org.xerial</groupId>
+             <artifactId>sqlite-jdbc</artifactId>
+-            <version>3.7.2</version>
++            <version>3.36.0.3</version>
+             <type>jar</type>
+             <scope>compile</scope>
+         </dependency>
+         <dependency>
+             <groupId>mysql</groupId>
+             <artifactId>mysql-connector-java</artifactId>
+-            <version>5.1.14</version>
++            <version>5.1.49</version>
+             <type>jar</type>
+             <scope>compile</scope>
+         </dependency>
+@@ -134,7 +134,7 @@
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-jar-plugin</artifactId>
+-                <version>2.5</version>
++                <version>3.2.2</version>
+                 <configuration>
+                     <forceCreation>true</forceCreation> <!-- Required to prevent shading the jar multiple times -->
+                     <archive>
+@@ -229,7 +229,7 @@
+             <plugin>
+                 <groupId>net.md-5</groupId>
+                 <artifactId>specialsource-maven-plugin</artifactId>
+-		<version>1.2.3</version> <!-- paper - bump log4j -->
++		<version>1.2.4</version> <!-- paper - bump log4j -->
+                 <executions>
+                     <execution>
+                         <phase>package</phase>
+@@ -246,8 +246,7 @@
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
+-                <!-- versions after this appear to be broken -->
+-                <version>3.1</version>
++                <version>3.10.1</version>
+                 <configuration>
+                     <!-- we use the Eclipse compiler as it doesn't need a JDK -->
+                     <compilerId>eclipse</compilerId>
+@@ -259,14 +258,14 @@
+                     <dependency>
+                         <groupId>org.codehaus.plexus</groupId>
+                         <artifactId>plexus-compiler-eclipse</artifactId>
+-                        <version>2.5.0-spigotmc</version>
++                        <version>2.8.5-spigotmc</version>
+                     </dependency>
+                 </dependencies>
+             </plugin>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-surefire-plugin</artifactId>
+-                <version>2.18</version>
++                <version>2.22.2</version>
+                 <configuration>
+                     <workingDirectory>${basedir}/target/test-server</workingDirectory>
+                     <excludes>
