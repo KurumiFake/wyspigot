@@ -1,0 +1,104 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Thu, 14 Apr 2022 11:51:36 +0000
+Subject: [PATCH] pom changes
+
+
+diff --git a/pom.xml b/pom.xml
+index fe9d6d265b686ae1c373e4fdcd202b16673366f1..a318348b7290ee46e80f0be404c8dffa472dd8f6 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -4,18 +4,18 @@
+     <modelVersion>4.0.0</modelVersion>
+ 
+     <parent>
+-        <groupId>org.github.paperspigot</groupId>
+-        <artifactId>paperspigot-parent</artifactId>
++        <groupId>me.kurumifake.wyspigot</groupId>
++        <artifactId>wyspigot-parent</artifactId>
+         <version>dev-SNAPSHOT</version>
+     </parent>
+ 
+-    <groupId>org.github.paperspigot</groupId>
+-    <artifactId>paperspigot-api</artifactId>
++    <groupId>me.kurumifake.wyspigot</groupId>
++    <artifactId>wyspigot-api</artifactId>
+     <version>1.8.8-R0.1-SNAPSHOT</version>
+     <packaging>jar</packaging>
+ 
+-    <name>PaperSpigot-API</name>
+-    <url>https://hub.spigotmc.org/stash/projects/PAPER/</url>
++    <name>WYSpIgot-API</name>
++    <url>https://github.com/KurumiFake/wyspigot</url>
+     <description>An enhanced plugin API for Minecraft servers.</description>
+ 
+     <properties>
+@@ -67,18 +67,18 @@
+             <type>jar</type>
+             <scope>compile</scope>
+         </dependency>
+-        <!-- bundled with Minecraft, should be kept in sync -->
++        <!-- bundled with Minecraft, should be kept in sync --> <!-- wyspigot - hrjdjkwndhfisni -->
+         <dependency>
+             <groupId>com.google.guava</groupId>
+             <artifactId>guava</artifactId>
+-            <version>17.0</version>
++            <version>27.1-jre</version>
+             <scope>compile</scope>
+         </dependency>
+-        <!-- bundled with Minecraft, should be kept in sync -->
++        <!-- bundled with Minecraft, should be kept in sync --> <!-- wyspigot - hrjdjkwndhfisni -->
+         <dependency>
+             <groupId>com.google.code.gson</groupId>
+             <artifactId>gson</artifactId>
+-          <version>2.2.4</version>
++          <version>2.9.0</version>
+         </dependency>
+         <dependency>
+             <groupId>org.avaje</groupId>
+@@ -89,7 +89,7 @@
+         <dependency>
+             <groupId>org.yaml</groupId>
+             <artifactId>snakeyaml</artifactId>
+-            <version>1.15</version>
++            <version>1.30</version>
+             <scope>compile</scope>
+         </dependency>
+         <dependency>
+@@ -104,7 +104,7 @@
+         <dependency>
+             <groupId>junit</groupId>
+             <artifactId>junit</artifactId>
+-            <version>4.12</version>
++            <version>4.13.2</version>
+             <scope>test</scope>
+         </dependency>
+         <dependency>
+@@ -120,8 +120,8 @@
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
+-                <!-- versions after this appear to be broken -->
+-                <version>3.1</version>
++                <!-- versions after this appear to be broken --> <!-- wyspigot - hrjdjkwndhfisni -->
++                <version>3.10.1</version>
+                 <configuration>
+                     <!-- we use the Eclipse compiler as it doesn't need a JDK -->
+                     <compilerId>eclipse</compilerId>
+@@ -133,14 +133,14 @@
+                     <dependency>
+                         <groupId>org.codehaus.plexus</groupId>
+                         <artifactId>plexus-compiler-eclipse</artifactId>
+-                        <version>2.5.0-spigotmc</version>
++                        <version>2.8.5-spigotmc</version>
+                     </dependency>
+                 </dependencies>
+             </plugin>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-shade-plugin</artifactId>
+-                <version>2.3</version>
++                <version>3.2.4</version>
+                 <executions>
+                     <execution>
+                         <phase>package</phase>
