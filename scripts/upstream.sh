@@ -22,7 +22,7 @@ fi
 tacospigotVer=$(gethead TacoSpigot)
 cd "$basedir/TacoSpigot/"
 
-./build.sh
+./applyPatches.sh
 
 cd "TacoSpigot-Server"
 mcVer=$(mvn -o org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=minecraft_version | sed -n -e '/^\[.*\]/ !{ /^[0-9]/ { p; q } }')
@@ -30,7 +30,7 @@ mcVer=$(mvn -o org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpre
 basedir
 . $basedir/scripts/importmcdev.sh
 
-minecraftversion=$(cat "$basedir"/TacoSpigot/Paper/work/BuildData/info.json | grep minecraftVersion | cut -d '"' -f 4)
+minecraftversion=1.8.8
 version=$(echo -e "TacoSpigot: $tacospigotVer\nmc-dev:$importedmcdev")
 tag="${minecraftversion}-${mcVer}-$(echo -e $version | shasum | awk '{print $1}')"
 echo "$tag" > "$basedir"/current-tacospigot
@@ -59,6 +59,5 @@ fi
 tag TacoSpigot-API $forcetag
 tag TacoSpigot-Server $forcetag
 
-pushRepo TacoSpigot-API $PAPER_API_REPO $tag
-pushRepo TacoSpigot-Server $PAPER_SERVER_REPO $tag
-
+pushRepo TacoSpigot-API $TACOSPIGOT_API_REPO $tag
+pushRepo TacoSpigot-Server $TACOSPIGOT_SERVER_REPO $tag
