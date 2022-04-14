@@ -88,17 +88,6 @@ case "$1" in
     "s" | "server")
         cd "$basedir/WYSpIgot-Server"
     ;;
-    "setup")
-        if [[ -f ~/.bashrc ]] ; then
-            NAME="ec"
-            if [[ ! -z "${2+x}" ]] ; then
-                NAME="$2"
-            fi
-            (grep "alias $NAME=" ~/.bashrc > /dev/null) && (sed -i "s|alias $NAME=.*|alias $NAME='. $SOURCE'|g" ~/.bashrc) || (echo "alias $NAME='. $SOURCE'" >> ~/.bashrc)
-            alias "$NAME=. $SOURCE"
-            echo "You can now just type '$NAME' at any time to access the paper tool."
-        fi
-    ;;
     *)
         echo "WYSpIgot build tool command. This provides a variety of commands to build and manage the PaperMC build"
         echo "environment. For all of the functionality of this command to be available, you must first run the"
@@ -113,19 +102,11 @@ case "$1" in
         echo ""
         echo " These commands require the setup command before use:"
         echo "  * r, root      | Change directory to the root of the project."
-        echo "  * a. api       | Move to the Paper-API directory."
-        echo "  * s, server    | Move to the Paper-Server directory."
+        echo "  * a. api       | Move to the WYSpIgot-API directory."
+        echo "  * s, server    | Move to the WYSpIgot-Server directory."
         echo "  * e, edit      | Use to edit a specific patch, give it the argument \"server\" or \"api\""
         echo "                 | respectively to edit the correct project. Use the argument \"continue\" after"
         echo "                 | the changes have been made to finish and rebuild patches. Can be called from anywhere."
-        echo ""
-        echo "  * setup        | Add an alias to .bashrc to allow full functionality of this script. Run as:"
-        echo "                 |     . ./dionysus setup"
-        echo "                 | After you run this command you'll be able to just run 'dionysus' from anywhere."
-        echo "                 | The default name for the resulting alias is 'dionysus', you can give an argument to override"
-        echo "                 | this default, such as:"
-        echo "                 |     . ./dionysus setup example"
-        echo "                 | Which will allow you to run 'example' instead."
     ;;
 esac
 

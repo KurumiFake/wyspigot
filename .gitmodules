@@ -1,7 +1,8 @@
-[submodule "FlamePaper"]
-	path = FlamePaper
-	url = https://github.com/2lstudios-mc/FlamePaper
 [submodule "work/Paperclip"]
 	path = work/Paperclip
 	url = https://github.com/PaperMC/Paperclip
 	branch = master
+[submodule "TacoSpigot"]
+	path = TacoSpigot
+	url = https://github.com/TacoSpigot/TacoSpigot
+	branch = version/1.8.8

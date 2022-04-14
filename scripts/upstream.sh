@@ -12,32 +12,32 @@ git submodule update --init --recursive
 
 if [[ "$1" == up* ]]; then
     (
-        cd "$basedir/FlamePaper/"
+        cd "$basedir/TacoSpigot/"
 		git fetch && git reset --hard origin/dev
         cd ../
-        git add FlamePaper
+        git add TacoSpigot
     )
 fi
 
-flamepaperVer=$(gethead FlamePaper)
-cd "$basedir/FlamePaper/"
+tacospigotVer=$(gethead TacoSpigot)
+cd "$basedir/TacoSpigot/"
 
 ./build.sh
 
-cd "FlamePaper-Server"
+cd "TacoSpigot-Server"
 mcVer=$(mvn -o org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=minecraft_version | sed -n -e '/^\[.*\]/ !{ /^[0-9]/ { p; q } }')
 
 basedir
 . $basedir/scripts/importmcdev.sh
 
-minecraftversion=$(cat "$basedir"/FlamePaper/Paper/work/BuildData/info.json | grep minecraftVersion | cut -d '"' -f 4)
-version=$(echo -e "FlamePaper: $flamepaperVer\nmc-dev:$importedmcdev")
+minecraftversion=$(cat "$basedir"/TacoSpigot/Paper/work/BuildData/info.json | grep minecraftVersion | cut -d '"' -f 4)
+version=$(echo -e "TacoSpigot: $tacospigotVer\nmc-dev:$importedmcdev")
 tag="${minecraftversion}-${mcVer}-$(echo -e $version | shasum | awk '{print $1}')"
-echo "$tag" > "$basedir"/current-flamepaper
+echo "$tag" > "$basedir"/current-tacospigot
 
 "$basedir"/scripts/generatesources.sh
 
-cd FlamePaper/
+cd TacoSpigot/
 
 function tag {
 (
@@ -52,13 +52,13 @@ echo "Tagging as $tag"
 echo -e "$version"
 
 forcetag=0
-if [ "$(cat "$basedir"/current-flamepaper)" != "$tag" ]; then
+if [ "$(cat "$basedir"/current-tacospigot)" != "$tag" ]; then
     forcetag=1
 fi
 
-tag FlamePaper-API $forcetag
-tag FlamePaper-Server $forcetag
+tag TacoSpigot-API $forcetag
+tag TacoSpigot-Server $forcetag
 
-pushRepo FlamePaper-API $PAPER_API_REPO $tag
-pushRepo FlamePaper-Server $PAPER_SERVER_REPO $tag
+pushRepo TacoSpigot-API $PAPER_API_REPO $tag
+pushRepo TacoSpigot-Server $PAPER_SERVER_REPO $tag
 
