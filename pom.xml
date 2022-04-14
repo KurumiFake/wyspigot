@@ -9,7 +9,7 @@
         <version>9</version>
     </parent>
 
-    <groupId>me.kurumifake</groupId>
+    <groupId>me.kurumifake.wyspigot</groupId>
     <artifactId>wyspigot-parent</artifactId>
     <version>dev-SNAPSHOT</version>
     <packaging>pom</packaging>
