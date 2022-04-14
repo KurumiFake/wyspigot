@@ -92,10 +92,20 @@ for f in $files; do
     fi
 done
 
-import LegacyPingHandler
-import PacketDecoder
-import PacketEncoder
-import PacketDataSerializer
+#import LegacyPingHandler
+#import PacketDecoder
+#import PacketEncoder
+#import PacketDataSerializer
+import BlockState
+import BlockStateBoolean
+import BlockStateEnum
+import BlockSttaeInteger
+import BlockStateList
+import CommandScoreboard
+import EULA
+import IBlockState
+import PacketLoginInEncryptionBegin
+
 ########################################################
 ########################################################
 ########################################################
