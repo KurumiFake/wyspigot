@@ -7,7 +7,7 @@ Subject: [PATCH] pom changes
 - bump depndencies
 
 diff --git a/pom.xml b/pom.xml
-index b61d116d0910e81451bc39fd94c4144f0efc173e..a64655f3cd2ce57e1ccd6810d87864503c57edea 100644
+index b61d116d0910e81451bc39fd94c4144f0efc173e..956f0f502259e8aa559dc9dc2627c54120fd8b75 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -4,18 +4,18 @@
@@ -22,8 +22,9 @@ index b61d116d0910e81451bc39fd94c4144f0efc173e..a64655f3cd2ce57e1ccd6810d8786450
      </parent>
  
 -    <groupId>net.techcable.tacospigot</groupId>
+-    <artifactId>api</artifactId>
 +    <groupId>me.kurumifake.wyspigot</groupId>
-     <artifactId>api</artifactId>
++    <artifactId>wyspigot-api</artifactId>
      <version>1.8.8-R0.2-SNAPSHOT</version>
      <packaging>jar</packaging>
  
