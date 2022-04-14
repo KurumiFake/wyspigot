@@ -99,7 +99,7 @@ done
 import BlockState
 import BlockStateBoolean
 import BlockStateEnum
-import BlockSttaeInteger
+import BlockStateInteger
 import BlockStateList
 import CommandScoreboard
 import EULA
