@@ -7,9 +7,9 @@ set -e
 basedir="$(cd "$1" && pwd -P)"
 workdir="$basedir/Paper/work"
 localworkdir="$basedir/work"
-mcver=1.8.8
+mcver==$(cat "$basedir/Paper/BuildData/info.json" | grep minecraftVersion | cut -d '"' -f 4)
 paperjar="$basedir/WYSpIgot-Server/target/wyspigot-$mcver.jar"
-vanillajar="$workdir/Minecraft/$mcver/$mcver.jar"
+vanillajar="$workdir/$mcver/$mcver.jar"
 
 cd "$localworkdir/Paperclip"
 mvn clean package "-Dmcver=$mcver" "-Dpaperjar=$paperjar" "-Dvanillajar=$vanillajar" || exit 1
