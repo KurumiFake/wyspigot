@@ -37,10 +37,10 @@ function import {
 
     if [[ ! -f "$target" ]]; then
         export MODLOG="$MODLOG  Imported $file from mc-dev\n";
-        echo "$(bashColor 1 32) Copying $(bashColor 1 34)$base $(bashColor 1 32)to$(bashColor 1 34) $target $(bashColorReset)"
+        echo "Copying $base to $target"
         cp "$base" "$target"
     else
-        echo "$(bashColor 1 33) UN-NEEDED IMPORT STATEMENT:$(bashColor 1 34) $file $(bashColorReset)"
+        echo "UN-NEEDED IMPORT STATEMENT: $file"
     fi
 }
 
@@ -83,7 +83,7 @@ for f in $files; do
         if [ ! -f "$basedir/Paper/PaperSpigot-Server/src/main/java/net/minecraft/server/$f.java" ]; then
             if [ ! -f "$decompiledir/$nms/$f.java" ]; then
                 if [[ ! $f == WYSpIgot* ]]; then
-                    echo "$(bashColor 1 31) ERROR!!! Missing NMS$(bashColor 1 34) $f $(bashColorReset)";
+                    echo " ERROR!!! Missing NMS $f";
                 fi
             else
                 import $f

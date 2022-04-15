@@ -15,22 +15,22 @@ jobs:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
-      - name: Configure Git
-        run: git config --global user.email "no-reply@github.com" && git config --global user.name "Github Actions"
-      - name: Apply patches
-        run: ./wyspigot patch
-      - name: Build
+      - name: patch
+        run: |
+          git config --global user.email "no-reply@github.com"
+          git config --global user.name "Github Actions"
+          ./wyspigot patch
+      - name: paperclip
         run: ./wyspigot jar
-      - name: date
-        id: date
-        run: echo "::set-output name=date::$(date +'%H:%M %m/%d/%Y')"
-      - name: commit hash
-        id: shortHash
-        run: echo "::set-output name=shortHash::$(git rev-parse --short HEAD)"
+      - name: release info
+        id: relInfo
+        run: |
+          echo "::set-output name=date::$(date +'%H:%M %m/%d/%Y')"
+          echo "::set-output name=shortHash::$(git rev-parse --short HEAD)"
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "1.8.8"
           prerelease: false
-          title: "WYSpIgot ${{ steps.date.outputs.date }} ${{ steps.shortHash.outputs.shortHash }}"
-          files: ./target/wyspigot-paperclip.jar
+          title: "WYSpIgot ${{ steps.relInfo.outputs.date }} ${{ steps.relInfo.outputs.shortHash }}"
+          files: ./wyspigot-paperclip.jar

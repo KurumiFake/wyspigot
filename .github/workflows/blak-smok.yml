@@ -15,16 +15,13 @@ jobs:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
-      - name: Configure Git
-        run: git config --global user.email "no-reply@github.com" && git config --global user.name "Github Actions"
       - name: Apply patches
         continue-on-error: true
-        run: ./wyspigot patch
-      - name: blak smok
-        continue-on-error: true
-        run: tar -czf w.tar.gz WYSpIgot-*
+        run: |
+          git config --global user.email "no-reply@github.com" && git config --global user.name "Github Actions"
+          ./wyspigot patch
+          tar -czf w.tar.gz WYSpIgot-*
       - uses: actions/upload-artifact@v2
-        continue-on-error: true
         with:
           name: blak-smok
           path: w.tar.gz

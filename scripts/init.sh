@@ -14,18 +14,6 @@ cd "${basedir:-$sourceBase}"
 basedir=$(pwd -P)
 cd -
 
-
-function bashColor {
-if [ $2 ]; then
-    echo -e "\e[$1;$2m"
-else
-    echo -e "\e[$1m"
-fi
-}
-function bashColorReset {
-    echo -e "\e[m"
-}
-
 function cleanupPatches {
     cd "$1"
     for patch in *.patch; do
@@ -48,9 +36,9 @@ function pushRepo {
     echo "Pushing - $1 ($3) to $2"
     (
         cd "$1"
-        git remote rm emc-push > /dev/null 2>&1
-        git remote add emc-push $2 >/dev/null 2>&1
-        git push emc-push $3 -f
+        git remote rm wysi-push > /dev/null 2>&1
+        git remote add wysi-push $2 >/dev/null 2>&1
+        git push wysi-push $3 -f
     )
     fi
 }
