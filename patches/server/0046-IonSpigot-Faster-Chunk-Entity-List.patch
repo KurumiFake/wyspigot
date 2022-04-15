@@ -8,25 +8,26 @@ sigificantly when theres a lot of entities grouped together moving.
 
 diff --git a/src/main/java/io/papermc/paper/util/maplist/ObjectMapList.java b/src/main/java/io/papermc/paper/util/maplist/ObjectMapList.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..3d6494e4c23626c406d91bd61077e3f20c8cfc45
+index 0000000000000000000000000000000000000000..1cd951dbd97eeb9336d2806e4d924cf7e8b540e3
 --- /dev/null
 +++ b/src/main/java/io/papermc/paper/util/maplist/ObjectMapList.java
-@@ -0,0 +1,201 @@
+@@ -0,0 +1,202 @@
 +package io.papermc.paper.util.maplist;
 +
 +import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 +import it.unimi.dsi.fastutil.objects.AbstractReferenceList;
 +import it.unimi.dsi.fastutil.objects.ObjectListIterator;
++import it.unimi.dsi.fastutil.objects.ObjectSpliterator;
 +
 +import java.util.Arrays;
 +import java.util.NoSuchElementException;
 +import java.util.Set;
-+import java.util.Spliterator;
 +
 +/**
 + * list with O(1) remove & contains
 + * @author Spottedleaf
 + */
++@SuppressWarnings("unchecked")
 +public final class ObjectMapList<T> extends AbstractReferenceList<T> implements Set<T> {
 +
 +    protected final Int2IntOpenHashMap objectToIndex;
@@ -90,7 +91,7 @@ index 0000000000000000000000000000000000000000..3d6494e4c23626c406d91bd61077e3f2
 +        T[] list = this.elements;
 +        if (list.length == count) {
 +            // resize required
-+            list = this.elements = Arrays.copyOf(list, (int)Math.max(4L, count << 1)); // overflow results in negative
++            list = this.elements = Arrays.copyOf(list, (int)Math.max(4L, (long) count << 1)); // overflow results in negative
 +        }
 +
 +        list[count] = object;
@@ -110,7 +111,7 @@ index 0000000000000000000000000000000000000000..3d6494e4c23626c406d91bd61077e3f2
 +        T[] list = this.elements;
 +        if (list.length == count) {
 +            // resize required
-+            list = this.elements = Arrays.copyOf(list, (int) Math.max(4L, count << 1)); // overflow results in negative
++            list = this.elements = Arrays.copyOf(list, (int) Math.max(4L, (long) count << 1)); // overflow results in negative
 +        }
 +
 +        System.arraycopy(list, index, list, index + 1, count - index);
@@ -145,7 +146,7 @@ index 0000000000000000000000000000000000000000..3d6494e4c23626c406d91bd61077e3f2
 +    }
 +
 +    @Override
-+    public Spliterator<T> spliterator() {
++    public ObjectSpliterator<T> spliterator() {
 +        return super.spliterator();
 +    }
 +
