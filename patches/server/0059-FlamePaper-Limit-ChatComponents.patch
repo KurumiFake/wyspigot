@@ -5,7 +5,7 @@ Subject: [PATCH] (FlamePaper) Limit ChatComponents
 
 
 diff --git a/src/main/java/net/minecraft/server/IChatBaseComponent.java b/src/main/java/net/minecraft/server/IChatBaseComponent.java
-index b187a851842baf97f9d9cda66803befe3378a29e..d828d0673dcf03d8c56d410a7de86d62b3a70cf1 100644
+index b187a851842baf97f9d9cda66803befe3378a29e..cfb56a2aff9a90f507f65ed09ffd15ab4e6d000b 100644
 --- a/src/main/java/net/minecraft/server/IChatBaseComponent.java
 +++ b/src/main/java/net/minecraft/server/IChatBaseComponent.java
 @@ -40,17 +40,31 @@ public interface IChatBaseComponent extends Iterable<IChatBaseComponent> {
@@ -48,7 +48,7 @@ index b187a851842baf97f9d9cda66803befe3378a29e..d828d0673dcf03d8c56d410a7de86d62
 +
 +                        // FlamePaper start - Limit ChatComponents
 +                        if (jsonarray1.size() > 12) {
-+                            throw new JsonParseException("Too many ChatComponent array elements in >
++                            throw new JsonParseException("Too many ChatComponent array elements in with");
 +                        }
 +                        // FlamePaper end - Limit Chatcomponents
 +
@@ -64,7 +64,7 @@ index b187a851842baf97f9d9cda66803befe3378a29e..d828d0673dcf03d8c56d410a7de86d62
 -                            aobject[i] = this.a(jsonarray1.get(i), type, jsondeserializationcontext);
 +                            // FlamePaper start - Limit ChatComponents
 +                            if (jsonarray1.get(i).isJsonArray()) {
-+                                throw new JsonParseException("Stacked ChatComponent array in with e>
++                                throw new JsonParseException("Stacked ChatComponent array in with element");
 +                            }
 +                            // FlamePaper end - Limit Chatcomponents
 +
@@ -72,19 +72,19 @@ index b187a851842baf97f9d9cda66803befe3378a29e..d828d0673dcf03d8c56d410a7de86d62
                              if (aobject[i] instanceof ChatComponentText) {
                                  ChatComponentText chatcomponenttext = (ChatComponentText) aobject[i];
  
-@@ -114,12 +147,29 @@ public interface IChatBaseComponent extends Iterable<IChatBaseComponent> {
+@@ -114,12 +147,30 @@ public interface IChatBaseComponent extends Iterable<IChatBaseComponent> {
                  if (jsonobject.has("extra")) {
                      JsonArray jsonarray2 = jsonobject.getAsJsonArray("extra");
  
 +                    // FlamePaper start - Limit ChatComponents
 +                    if (jsonarray2.size() > 12) {
-+                        throw new JsonParseException("Too many ChatComponent array elements in extr>
++                        throw new JsonParseException("Too many ChatComponent array elements in extra");
 +                    }
 +                    // FlamePaper end - Limit Chatcomponents
 +
 +                    // FlamePaper start - Limit ChatComponents
 +                    if (extraCount > 12) {
-+                        throw new JsonParseException("Too many stacked extra ChatComponent elements>
++                        throw new JsonParseException("Too many stacked extra ChatComponent elements");
 +                    }
 +                    // FlamePaper end - Limit Chatcomponents
 +
@@ -96,14 +96,15 @@ index b187a851842baf97f9d9cda66803befe3378a29e..d828d0673dcf03d8c56d410a7de86d62
 -                        ((IChatBaseComponent) object).addSibling(this.a(jsonarray2.get(j), type, jsondeserializationcontext));
 +                        // FlamePaper start - Limit ChatComponents
 +                        if (jsonarray2.get(j).isJsonArray()) {
-+                            throw new JsonParseException("Stacked ChatComponent array in extra elem>
++                            throw new JsonParseException("Stacked ChatComponent array in extra element");
 +                        }
 +                        // FlamePaper end - Limit Chatcomponents
++
 +                        ((IChatBaseComponent) object).addSibling(++extraCount, this.a(jsonarray2.get(j), type, jsondeserializationcontext));
                      }
                  }
  
-@@ -128,6 +178,10 @@ public interface IChatBaseComponent extends Iterable<IChatBaseComponent> {
+@@ -128,6 +179,10 @@ public interface IChatBaseComponent extends Iterable<IChatBaseComponent> {
              }
          }
  
