@@ -7,7 +7,7 @@ set -e
 basedir="$(cd "$1" && pwd -P)"
 workdir="$basedir/Paper/work"
 localworkdir="$basedir/work"
-mcver==$(cat "$basedir/Paper/BuildData/info.json" | grep minecraftVersion | cut -d '"' -f 4)
+mcver=1.8.8
 paperjar="$basedir/WYSpIgot-Server/target/wyspigot-$mcver.jar"
 vanillajar="$workdir/$mcver/$mcver.jar"
 
