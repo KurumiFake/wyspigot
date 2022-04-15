@@ -5,7 +5,7 @@ Subject: [PATCH] (FlamePaper) Limit ChatComponents
 
 
 diff --git a/src/main/java/net/minecraft/server/IChatBaseComponent.java b/src/main/java/net/minecraft/server/IChatBaseComponent.java
-index b187a851842baf97f9d9cda66803befe3378a29e..bebcc1e9ffd538fa886afdf3a2f981c32b4c88c0 100644
+index b187a851842baf97f9d9cda66803befe3378a29e..67631ffe00ecf12d2d62f61a37982e39da616cc3 100644
 --- a/src/main/java/net/minecraft/server/IChatBaseComponent.java
 +++ b/src/main/java/net/minecraft/server/IChatBaseComponent.java
 @@ -40,17 +40,31 @@ public interface IChatBaseComponent extends Iterable<IChatBaseComponent> {
@@ -107,7 +107,7 @@ index b187a851842baf97f9d9cda66803befe3378a29e..bebcc1e9ffd538fa886afdf3a2f981c3
              }
          }
  
-+        public IChatBaseComponent a(JsonElement jsonelement, Type type, JsonDeserializationContext jsondeserializationcontext) throws JsonParseException {
++        public Object a(JsonElement jsonelement, Type type, JsonSerializationContext jsonserializationcontext) throws JsonParseException {
 +            return a(0, null, jsonelement, type, jsondeserializationcontext);
 +        }
 +
