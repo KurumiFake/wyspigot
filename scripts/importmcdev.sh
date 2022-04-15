@@ -96,7 +96,7 @@ done
 #import PacketDecoder
 #import PacketEncoder
 #import PacketDataSerializer
-import IChatBaseComponent
+#import IChatBaseComponent # buildtools...
 import MCUtil
 ########################################################
 ########################################################
