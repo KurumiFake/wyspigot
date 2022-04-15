@@ -5,7 +5,7 @@ Subject: [PATCH] version command things
 
 
 diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
-index 42da60a830f293936fde83319edb8758233bb9d9..a6f8b72260daf676867b1985d190e394bc307e04 100644
+index 42da60a830f293936fde83319edb8758233bb9d9..ac764a012aa33f40e55905ed8d71ab56f778cd6f 100644
 --- a/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 +++ b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
 @@ -7,7 +7,7 @@ import java.util.List;
@@ -104,7 +104,7 @@ index 42da60a830f293936fde83319edb8758233bb9d9..a6f8b72260daf676867b1985d190e394
                      break;
                  default:
 -                    setVersionMessage("You are " + distance + " version(s) behind");
-+                    setVersionMessage("distance + " version(s) behind");
++                    setVersionMessage(distance + " version(s) behind");
              }
              // remove checking for other forks
          /*
