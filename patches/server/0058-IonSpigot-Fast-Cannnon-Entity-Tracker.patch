@@ -20,7 +20,7 @@ index 4ad3e89c0079b408966a7647b0869e90b10bd596..0e1f8648170cd8a93423c499da5478ff
  }
 diff --git a/src/main/java/me/suicidalkids/ion/visuals/CannonTrackerEntry.java b/src/main/java/me/suicidalkids/ion/visuals/CannonTrackerEntry.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..9da9695ed1041963ec239b2d09e8026a36afca21
+index 0000000000000000000000000000000000000000..111eff40eccf351eae5891dd95c4a121087fdc2a
 --- /dev/null
 +++ b/src/main/java/me/suicidalkids/ion/visuals/CannonTrackerEntry.java
 @@ -0,0 +1,110 @@
@@ -113,7 +113,7 @@ index 0000000000000000000000000000000000000000..9da9695ed1041963ec239b2d09e8026a
 +            entityplayer.removeQueue.remove(Integer.valueOf(this.tracker.getId()));
 +
 +            this.trackedPlayerMap.put(entityplayer, true); // Paper
-+            Packet packet = this.c(); // IonSpigot
++            Packet packet = this.createPacket(entityplayer); // IonSpigot
 +            if (packet == null) return; // IonSpigot - If it's null don't update the client!
 +
 +            entityplayer.playerConnection.sendPacket(packet);
@@ -164,10 +164,10 @@ index e24644c425edf6a9aed5081a8de66d73b6563717..71eb6162b5f73005a87c693bc0687544
      public void untrackEntity(Entity entity) {
          org.spigotmc.AsyncCatcher.catchOp( "entity untrack"); // Spigot
 diff --git a/src/main/java/net/minecraft/server/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
-index bfb1997f7010c79486b5dfed674a31e62f43d334..86aad5c6d2e4d94ef4426426de70ee106f41556a 100644
+index 565c3105be525861ecd5b22e8df5932517b9f2bd..9f4fb20dea173fd8d0f401e54650fdaff6497c09 100644
 --- a/src/main/java/net/minecraft/server/EntityTrackerEntry.java
 +++ b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
-@@ -445,7 +445,7 @@ public class EntityTrackerEntry {
+@@ -448,7 +448,7 @@ public class EntityTrackerEntry {
          return d0 >= (double) (-this.b) && d0 <= (double) this.b && d1 >= (double) (-this.b) && d1 <= (double) this.b && this.tracker.a(entityplayer);
      }
  
