@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: "kfian294ma4@gmail.com" <kfian294ma4@gmail.com>
+Date: Wed, 16 Dec 2020 18:38:26 +0000
+Subject: [PATCH] (IonSpigot) Smooth Potting
+
+
+diff --git a/src/main/java/me/suicidalkids/ion/IonWorldConfig.java b/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
+index 22f3378b641a9eaa1833cbd6597cfac02938e3d3..2331c9ad6cf0e2ad9977dcdbd8d056e5ba1c99aa 100644
+--- a/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
++++ b/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
+@@ -121,6 +121,10 @@ public class IonWorldConfig {
+     public boolean lagCompensatedPearls;
+     private void LagCompensatedPearls() {
+         lagCompensatedPearls = getBoolean("pearls.lag-compensated", true);
++
++    public boolean smoothPotting;
++    private void SmoothPotting() {
++        smoothPotting = getBoolean("potions.smooth", true);
+     }
+ 
+ }
+diff --git a/src/main/java/net/minecraft/server/EntityProjectile.java b/src/main/java/net/minecraft/server/EntityProjectile.java
+index ce91bf98f4b3cdeb632714837691b1eda14f3b50..c02624be51602a47faf77c987fcf90304d7426ef 100644
+--- a/src/main/java/net/minecraft/server/EntityProjectile.java
++++ b/src/main/java/net/minecraft/server/EntityProjectile.java
+@@ -131,6 +131,12 @@ public abstract class EntityProjectile extends Entity implements IProjectile {
+                     AxisAlignedBB axisalignedbb = entity1.getBoundingBox().grow((double) f, (double) f, (double) f);
+                     MovingObjectPosition movingobjectposition1 = axisalignedbb.a(vec3d, vec3d1);
+ 
++                    // IonSpigot start - Smooth Potting
++                    if (this instanceof EntityPotion && world.ionConfig.smoothPotting &&
++                        movingobjectposition1 == null && getBoundingBox().b(entity1.getBoundingBox())) {
++                        movingobjectposition1 = new MovingObjectPosition(entity1);
++                    }
++                    // IonSpigot end
+                     if (movingobjectposition1 != null) {
+                         double d1 = vec3d.distanceSquared(movingobjectposition1.pos);
+ 

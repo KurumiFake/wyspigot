@@ -1,0 +1,53 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: "kfian294ma4@gmail.com" <kfian294ma4@gmail.com>
+Date: Sat, 19 Dec 2020 18:50:09 +0000
+Subject: [PATCH] (IonSpigot) Lag Compensated Pearls
+
+
+diff --git a/src/main/java/me/suicidalkids/ion/IonWorldConfig.java b/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
+index f256d71c9a570ce51b9f50a70e60ea86a8794ea6..22f3378b641a9eaa1833cbd6597cfac02938e3d3 100644
+--- a/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
++++ b/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
+@@ -118,4 +118,9 @@ public class IonWorldConfig {
+         lagCompensatedPotions = getBoolean("potions.lag-compensated", true);
+     }
+ 
++    public boolean lagCompensatedPearls;
++    private void LagCompensatedPearls() {
++        lagCompensatedPearls = getBoolean("pearls.lag-compensated", true);
++    }
++
+ }
+diff --git a/src/main/java/net/minecraft/server/EntityEnderPearl.java b/src/main/java/net/minecraft/server/EntityEnderPearl.java
+index 2c94ae15bc164a1c8a633a917d98e79b9d2027b9..a7154ccc99c1f0d0c5fc42872ad1765c3766dbd4 100644
+--- a/src/main/java/net/minecraft/server/EntityEnderPearl.java
++++ b/src/main/java/net/minecraft/server/EntityEnderPearl.java
+@@ -23,6 +23,12 @@ public class EntityEnderPearl extends EntityProjectile {
+         super(world, entityliving);
+         this.c = entityliving;
+         this.loadChunks = world.paperSpigotConfig.loadUnloadedEnderPearls; // PaperSpigot
++        // IonSpigot start - Lag Compensated Pearls
++        if (entityliving instanceof EntityPlayer && world.ionConfig.lagCompensatedPearls) {
++            ((EntityPlayer) entityliving).lagCompensatedTicking.add(this);
++            compensated = true;
++        }
++        // IonSpigot end
+     }
+ 
+     protected void a(MovingObjectPosition movingobjectposition) {
+@@ -106,7 +112,15 @@ public class EntityEnderPearl extends EntityProjectile {
+ 
+     }
+ 
++    // IonSpigot start - Lag Compensated Pearls
++    @Override
+     public void t_() {
++        if (!compensated) {
++            tick();
++        }
++    }
++    public void tick() {
++    // IonSpigot end
+         EntityLiving entityliving = this.getShooter();
+ 
+         if (entityliving != null && entityliving instanceof EntityHuman && !entityliving.isAlive()) {

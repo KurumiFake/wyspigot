@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: "kfian294ma4@gmail.com" <kfian294ma4@gmail.com>
+Date: Wed, 16 Dec 2020 18:26:12 +0000
+Subject: [PATCH] (IonSpigot) Lag Compensated Potions
+
+
+diff --git a/src/main/java/me/suicidalkids/ion/IonWorldConfig.java b/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
+index 8d201f8a8f70b390ef4f1b2430bcd2098ef96158..f256d71c9a570ce51b9f50a70e60ea86a8794ea6 100644
+--- a/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
++++ b/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
+@@ -113,4 +113,9 @@ public class IonWorldConfig {
+         potionVerticalOffset = getFloat("potions.vertical-offset", -20.0F);
+     }
+ 
++    public boolean lagCompensatedPotions;
++    private void LagCompensatedPotions() {
++        lagCompensatedPotions = getBoolean("potions.lag-compensated", true);
++    }
++
+ }
+diff --git a/src/main/java/net/minecraft/server/EntityPotion.java b/src/main/java/net/minecraft/server/EntityPotion.java
+index f32b48d649b5c62e6c2a3201d2c2b0168f1681bc..5e98e66d836b3d167fb7d7af596f4097b9e6ecf8 100644
+--- a/src/main/java/net/minecraft/server/EntityPotion.java
++++ b/src/main/java/net/minecraft/server/EntityPotion.java
+@@ -25,6 +25,12 @@ public class EntityPotion extends EntityProjectile {
+     public EntityPotion(World world, EntityLiving entityliving, ItemStack itemstack) {
+         super(world, entityliving);
+         this.item = itemstack;
++        // IonSpigot start - Lag Compensated Potions
++        if (entityliving instanceof EntityPlayer && world.ionConfig.lagCompensatedPotions) {
++            ((EntityPlayer) entityliving).lagCompensatedTicking.add(this);
++            compensated = true;
++        }
++        // IonSpigot end
+     }
+ 
+     public EntityPotion(World world, double d0, double d1, double d2, ItemStack itemstack) {
+@@ -62,6 +68,17 @@ public class EntityPotion extends EntityProjectile {
+         return this.item.getData();
+     }
+ 
++    // IonSpigot start - Lag Compensated Potions
++    @Override
++    public void t_() {
++        if (!compensated) {
++            tick();
++        }
++    }
++    public void tick() {
++        super.t_();
++    }
++    // IonSpigot end
+     protected void a(MovingObjectPosition movingobjectposition) {
+         if (!this.world.isClientSide) {
+             List list = Items.POTION.h(this.item);

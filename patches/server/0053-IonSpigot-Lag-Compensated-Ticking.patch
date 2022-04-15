@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: "kfian294ma4@gmail.com" <kfian294ma4@gmail.com>
+Date: Sat, 19 Dec 2020 18:44:26 +0000
+Subject: [PATCH] (IonSpigot) Lag Compensated Ticking
+
+
+diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
+index 13dd5a70370188612adbd509f5284e93d212b44e..57826a21b02fd5e8ac60ac0dda63a02c9e02177f 100644
+--- a/src/main/java/net/minecraft/server/Entity.java
++++ b/src/main/java/net/minecraft/server/Entity.java
+@@ -132,6 +132,10 @@ public abstract class Entity implements ICommandListener {
+     public boolean isCannoningEntity; // IonSpigot
+     public boolean inUnloadedChunk = false; // PaperSpigot - Remove entities in unloaded chunks
+     public boolean loadChunks = false; // PaperSpigot - Entities can load chunks they move through and keep them loaded
++    // IonSpigot start - Lag Compensated Ticking
++    protected boolean compensated;
++    protected void tick() {}
++    // IonSpigot end
+ 
+     // Spigot start
+     public Timing tickTimer = SpigotTimings.getEntityTimings(this); // Spigot
+diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
+index 0c49a256cc481af1ceb7a873b03763e1d942a362..a1021140bc2d415e46953484017538eaf71c6ae2 100644
+--- a/src/main/java/net/minecraft/server/EntityPlayer.java
++++ b/src/main/java/net/minecraft/server/EntityPlayer.java
+@@ -50,6 +50,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+     public boolean g;
+     public int ping;
+     public boolean viewingCredits;
++    public List<Entity> lagCompensatedTicking = new ArrayList<>(); // IonSpigot - Lag Compensated Ticking
+ 
+     // CraftBukkit start
+     public String displayName;
+@@ -291,6 +292,21 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
+     public void l() {
+         try {
+             super.t_();
++            // IonSpigot start - Lag Compensated Ticking
++            for (int i = 0; i < this.lagCompensatedTicking.size(); ++i) {
++                Entity entity = this.lagCompensatedTicking.get(i);
++                entity.tick();
++
++                // Check if size is > 9, this should cover some abuse
++                if (entity.dead || this.lagCompensatedTicking.size() > 9) {
++                    if (!entity.dead) {
++                        entity.compensated = false;
++                    }
++
++                    this.lagCompensatedTicking.remove(i--);
++                }
++            }
++            // IonSpigot end
+ 
+             for (int i = 0; i < this.inventory.getSize(); ++i) {
+                 ItemStack itemstack = this.inventory.getItem(i);
