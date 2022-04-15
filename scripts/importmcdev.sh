@@ -97,6 +97,7 @@ done
 #import PacketEncoder
 #import PacketDataSerializer
 #import IChatBaseComponent
+import MCUtil
 ########################################################
 ########################################################
 ########################################################
