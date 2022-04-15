@@ -1,0 +1,128 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Fri, 15 Apr 2022 05:11:12 +0000
+Subject: [PATCH] version command things
+
+
+diff --git a/src/main/java/org/bukkit/command/defaults/VersionCommand.java b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
+index 42da60a830f293936fde83319edb8758233bb9d9..a6f8b72260daf676867b1985d190e394bc307e04 100644
+--- a/src/main/java/org/bukkit/command/defaults/VersionCommand.java
++++ b/src/main/java/org/bukkit/command/defaults/VersionCommand.java
+@@ -7,7 +7,7 @@ import java.util.List;
+ 
+ import org.apache.commons.lang.Validate;
+ import org.bukkit.Bukkit;
+-import org.bukkit.ChatColor;
++//import org.bukkit.ChatColor;
+ import org.bukkit.command.CommandSender;
+ import org.bukkit.plugin.Plugin;
+ import org.bukkit.plugin.PluginDescriptionFile;
+@@ -48,7 +48,7 @@ public class VersionCommand extends BukkitCommand {
+         if (!testPermission(sender)) return true;
+ 
+         if (args.length == 0) {
+-            sender.sendMessage("This server is running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")");
++            sender.sendMessage("Running " + Bukkit.getName() + " version " + Bukkit.getVersion() + " (Implementing API version " + Bukkit.getBukkitVersion() + ")");
+             sendVersion(sender);
+         } else {
+             StringBuilder name = new StringBuilder();
+@@ -78,8 +78,8 @@ public class VersionCommand extends BukkitCommand {
+             }
+ 
+             if (!found) {
+-                sender.sendMessage("This server is not running any plugin by that name.");
+-                sender.sendMessage("Use /plugins to get a list of plugins.");
++                sender.sendMessage("Not running any plugin by that name.");
++                //sender.sendMessage("Use /plugins to get a list of plugins."); // wyspigot
+             }
+         }
+         return true;
+@@ -87,14 +87,14 @@ public class VersionCommand extends BukkitCommand {
+ 
+     private void describeToSender(Plugin plugin, CommandSender sender) {
+         PluginDescriptionFile desc = plugin.getDescription();
+-        sender.sendMessage(ChatColor.GREEN + desc.getName() + ChatColor.WHITE + " version " + ChatColor.GREEN + desc.getVersion());
++        sender.sendMessage(desc.getName() + " version " + desc.getVersion()); // wyspigot
+ 
+         if (desc.getDescription() != null) {
+             sender.sendMessage(desc.getDescription());
+         }
+ 
+         if (desc.getWebsite() != null) {
+-            sender.sendMessage("Website: " + ChatColor.GREEN + desc.getWebsite());
++            sender.sendMessage("Website: " + desc.getWebsite());
+         }
+ 
+         if (!desc.getAuthors().isEmpty()) {
+@@ -112,7 +112,7 @@ public class VersionCommand extends BukkitCommand {
+ 
+         for (int i = 0; i < authors.size(); i++) {
+             if (result.length() > 0) {
+-                result.append(ChatColor.WHITE);
++                //result.append(ChatColor.WHITE); // wyspigot
+ 
+                 if (i < authors.size() - 1) {
+                     result.append(", ");
+@@ -121,7 +121,7 @@ public class VersionCommand extends BukkitCommand {
+                 }
+             }
+ 
+-            result.append(ChatColor.GREEN);
++            //result.append(ChatColor.GREEN); // wyspigot
+             result.append(authors.get(i));
+         }
+ 
+@@ -171,7 +171,7 @@ public class VersionCommand extends BukkitCommand {
+                 return;
+             }
+             versionWaiters.add(sender);
+-            sender.sendMessage("Checking version, please wait...");
++            sender.sendMessage("Checking version..."); // wyspigot
+             if (!versionTaskStarted) {
+                 versionTaskStarted = true;
+                 new Thread(new Runnable() {
+@@ -191,21 +191,21 @@ public class VersionCommand extends BukkitCommand {
+         String version = Bukkit.getVersion();
+         if (version == null) version = "Custom";
+         // TacoSpigot start
+-        if (version.startsWith("git-TacoSpigot-")) {
+-            String[] parts = version.substring("git-Tacospigot-".length()).split("[-\\s]");
+-            int distance = getDistance("TacoSpigot/TacoSpigot", parts[0]);
++        if (version.startsWith("git-WYSpIgot-")) {
++            String[] parts = version.substring("git-WYSpIgot-".length()).split("[-\\s]");
++            int distance = getDistance("KurumiFake/wyspigot", parts[0]);
+             switch (distance) {
+                 case -1:
+                     setVersionMessage("Error obtaining version information");
+                     break;
+                 case 0:
+-                    setVersionMessage("You are running the latest version");
++                    setVersionMessage("Running the latest version");
+                     break;
+                 case -2:
+                     setVersionMessage("Unknown version");
+                     break;
+                 default:
+-                    setVersionMessage("You are " + distance + " version(s) behind");
++                    setVersionMessage("distance + " version(s) behind");
+             }
+             // remove checking for other forks
+         /*
+@@ -252,7 +252,7 @@ public class VersionCommand extends BukkitCommand {
+             */
+             // TacoSpigot end
+         } else {
+-            setVersionMessage("Unknown version, custom build?");
++            setVersionMessage("Unknown version.");
+         }
+     }
+ 
+@@ -278,7 +278,7 @@ public class VersionCommand extends BukkitCommand {
+         return getFromRepo(repo, currentVerInt);
+     }
+ 
+-    private static final String BRANCH = "version/1.8.8";
++    private static final String BRANCH = "ver/1.8.8"; // wyspigot
+     private static int getFromRepo(String repo, String hash) {
+         try {
+             /*

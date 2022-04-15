@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: frash23 <jacob@bytesizedpacket.com>
+Date: Thu, 24 Mar 2016 04:07:04 +0100
+Subject: [PATCH] (TacoSpigot) Add option to stop redstone firing
+ BlockPhysicsEvent
+
+
+diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
+index 6e2adc5143c5129837374a4a7509c063906011f5..4864c78191214a227b5e613b208beb511c1716dd 100644
+--- a/src/main/java/net/minecraft/server/World.java
++++ b/src/main/java/net/minecraft/server/World.java
+@@ -573,7 +573,9 @@ public abstract class World implements IBlockAccess {
+             try {
+                 // CraftBukkit start
+                 CraftWorld world = ((WorldServer) this).getWorld();
+-                if (world != null) {
++				// TacoSpigot start - Add config to disable redstone firing BlockPhysicsEvent 
++				if (world != null && (this.tacoSpigotConfig.isRedstoneFireBPE || !(block instanceof BlockRedstoneWire || block instanceof BlockRedstoneTorch || block instanceof BlockRepeater))) {
++				// TacoSpigot end
+                     BlockPhysicsEvent event = new BlockPhysicsEvent(world.getBlockAt(blockposition.getX(), blockposition.getY(), blockposition.getZ()), CraftMagicNumbers.getId(block));
+                     this.getServer().getPluginManager().callEvent(event);
+ 
+diff --git a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
+index 951126a63dd0d676b00c0878f99dd360a04d84fe..4892bff93659746c04a0921e7c2915dd269cd8b9 100644
+--- a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
++++ b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
+@@ -64,6 +64,11 @@ public class TacoSpigotWorldConfig {
+         return config.getString("world-settings." + worldName + "." + path, config.getString("world-settings.default." + path));
+     }
+ 
++    public boolean isRedstoneFireBPE;
++    private void isRedstoneFireBPE() {
++        isRedstoneFireBPE = getBoolean("redstone-fire-BlockPhysicsEvent", true);
++    }
++
+     public boolean isHopperPushBased;
+     private void isHopperPushBased() {
+         isHopperPushBased = getBoolean("hopper.push-based", true);
