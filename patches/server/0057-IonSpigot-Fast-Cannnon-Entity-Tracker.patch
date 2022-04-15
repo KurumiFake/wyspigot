@@ -5,10 +5,10 @@ Subject: [PATCH] (IonSpigot) Fast Cannnon Entity Tracker
 
 
 diff --git a/src/main/java/me/suicidalkids/ion/IonWorldConfig.java b/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
-index 2331c9ad6cf0e2ad9977dcdbd8d056e5ba1c99aa..800ee9413381cbef770c0f10397cd65aeb220a43 100644
+index 4ad3e89c0079b408966a7647b0869e90b10bd596..0e1f8648170cd8a93423c499da5478ffb00c77f5 100644
 --- a/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
 +++ b/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
-@@ -127,4 +127,9 @@ public class IonWorldConfig {
+@@ -128,4 +128,9 @@ public class IonWorldConfig {
          smoothPotting = getBoolean("potions.smooth", true);
      }
  
@@ -20,7 +20,7 @@ index 2331c9ad6cf0e2ad9977dcdbd8d056e5ba1c99aa..800ee9413381cbef770c0f10397cd65a
  }
 diff --git a/src/main/java/me/suicidalkids/ion/visuals/CannonTrackerEntry.java b/src/main/java/me/suicidalkids/ion/visuals/CannonTrackerEntry.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..bbe605c99a3edaf8e4711441d2457dd0353f5b6f
+index 0000000000000000000000000000000000000000..9da9695ed1041963ec239b2d09e8026a36afca21
 --- /dev/null
 +++ b/src/main/java/me/suicidalkids/ion/visuals/CannonTrackerEntry.java
 @@ -0,0 +1,110 @@
@@ -113,7 +113,7 @@ index 0000000000000000000000000000000000000000..bbe605c99a3edaf8e4711441d2457dd0
 +            entityplayer.removeQueue.remove(Integer.valueOf(this.tracker.getId()));
 +
 +            this.trackedPlayerMap.put(entityplayer, true); // Paper
-+            Packet packet = this.c(entityplayer); // IonSpigot
++            Packet packet = this.c(); // IonSpigot
 +            if (packet == null) return; // IonSpigot - If it's null don't update the client!
 +
 +            entityplayer.playerConnection.sendPacket(packet);
