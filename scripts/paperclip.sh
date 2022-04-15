@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Copied from https://github.com/PaperMC/Paper/blob/d54ce6c17fb7a35238d6b9f734d30a4289886773/scripts/paperclip.sh
+# License from Paper applies to this file
+
 set -e
 basedir="$(cd "$1" && pwd -P)"
 workdir="$basedir/Paper/work"
