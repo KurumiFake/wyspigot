@@ -1,0 +1,71 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: SuicidalKids <kfian294ma4@gmail.com>
+Date: Tue, 15 Sep 2020 05:04:13 +0100
+Subject: [PATCH] (IonSpigot) Ion Configuration Files
+
+
+diff --git a/src/main/java/co/aikar/timings/TimingsExport.java b/src/main/java/co/aikar/timings/TimingsExport.java
+index fe19ea003eedfe21c6400d83430d87ddba8f5f6e..1898c16737f5e74394358b48d391d21fccf45a5a 100644
+--- a/src/main/java/co/aikar/timings/TimingsExport.java
++++ b/src/main/java/co/aikar/timings/TimingsExport.java
+@@ -202,7 +202,9 @@ class TimingsExport extends Thread {
+         parent.put("config", createObject(
+             pair("spigot", mapAsJSON(Bukkit.spigot().getSpigotConfig(), null)),
+             pair("bukkit", mapAsJSON(Bukkit.spigot().getBukkitConfig(), null)),
+-            pair("paperspigot", mapAsJSON(Bukkit.spigot().getPaperSpigotConfig(), null))
++            pair("paperspigot", mapAsJSON(Bukkit.spigot().getPaperSpigotConfig(), null)),
++            pair("tacospigot", mapAsJSON(Bukkit.spigot().getTacoSpigotConfig(), null)), // IonSpigot - Fill in for tacospigot
++            pair("ion", mapAsJSON(Bukkit.spigot().getIonConfig(), null)) // IonSpigot
+         ));
+ 
+         new TimingsExport(sender, parent, history).start();
+diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
+index 1b62463a1e18d7e35524e06e791d321d6b3823c0..83ba099d3d68c64c74783b0276079d7660d1603b 100644
+--- a/src/main/java/org/bukkit/Server.java
++++ b/src/main/java/org/bukkit/Server.java
+@@ -973,6 +973,18 @@ public interface Server extends PluginMessageRecipient {
+             throw new UnsupportedOperationException("Not supported yet.");
+         }
+ 
++        // IonSpigot start - Configuration Files
++        public org.bukkit.configuration.file.YamlConfiguration getTacoSpigotConfig()
++        {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++        public org.bukkit.configuration.file.YamlConfiguration getIonConfig()
++        {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++        // IonSpigot end
++
+         /**
+          * Sends the component to the player
+          *
+diff --git a/src/main/java/org/bukkit/configuration/MemorySection.java b/src/main/java/org/bukkit/configuration/MemorySection.java
+index 0e2b26a9a82f98bbfd0a9a847ccb4a8c3e45498f..817463882e79a28d7b168fa79f195d749c0c6bc7 100644
+--- a/src/main/java/org/bukkit/configuration/MemorySection.java
++++ b/src/main/java/org/bukkit/configuration/MemorySection.java
+@@ -339,17 +339,19 @@ public class MemorySection implements ConfigurationSection {
+     // PaperSpigot start - Add getFloat
+     public float getFloat(String path) {
+         Object def = getDefault(path);
+-        return getFloat(path, (def instanceof Float) ? toFloat(def) : 0);
++        // IonSpigot start - Fix float always returning default value
++        return getFloat(path, (def instanceof Number) ? toFloat(def) : 0);
+     }
+ 
+     public float getFloat(String path, float def) {
+         Object val = get(path, def);
+-        return (val instanceof Float) ? toFloat(val) : def;
++        return (val instanceof Number) ? toFloat(val) : def;
+     }
+ 
+     public boolean isFloat(String path) {
+         Object val = get(path);
+-        return val instanceof Float;
++        return val instanceof Number;
++        // IonSpigot end
+     }
+     // PaperSpigot end
+ 

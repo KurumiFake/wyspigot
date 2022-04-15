@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: SuicidalKids <kfian294ma4@gmail.com>
+Date: Wed, 25 Nov 2020 18:42:50 +0000
+Subject: [PATCH] (IonSpigot) Faster EntityTracker Collections
+
+
+diff --git a/src/main/java/net/minecraft/server/EntityTracker.java b/src/main/java/net/minecraft/server/EntityTracker.java
+index cb72b36725927272fddfdad929b268a7b06140ac..e24644c425edf6a9aed5081a8de66d73b6563717 100644
+--- a/src/main/java/net/minecraft/server/EntityTracker.java
++++ b/src/main/java/net/minecraft/server/EntityTracker.java
+@@ -13,7 +13,7 @@ public class EntityTracker {
+ 
+     private static final Logger a = LogManager.getLogger();
+     private final WorldServer world;
+-    private Set<EntityTrackerEntry> c = Sets.newHashSet();
++    private Set<EntityTrackerEntry> c = new io.papermc.paper.util.maplist.ObjectMapList<>(); // IonSpigot - HashSet -> ObjectMapList
+     public IntHashMap<EntityTrackerEntry> trackedEntities = new IntHashMap();
+     private int e;
+ 
+diff --git a/src/main/java/net/minecraft/server/EntityTrackerEntry.java b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
+index 12112ce7aa63e8cc9869837f2bebcc92b1665a53..bfb1997f7010c79486b5dfed674a31e62f43d334 100644
+--- a/src/main/java/net/minecraft/server/EntityTrackerEntry.java
++++ b/src/main/java/net/minecraft/server/EntityTrackerEntry.java
+@@ -42,7 +42,7 @@ public class EntityTrackerEntry {
+     // PaperSpigot start
+     // Replace trackedPlayers Set with a Map. The value is true until the player receives
+     // their first update (which is forced to have absolute coordinates), false afterward.
+-    public java.util.Map<EntityPlayer, Boolean> trackedPlayerMap = new java.util.HashMap<EntityPlayer, Boolean>();
++    public java.util.Map<EntityPlayer, Boolean> trackedPlayerMap = new it.unimi.dsi.fastutil.objects.Reference2BooleanOpenHashMap<>(); // IonSpigot - HashMap -> Reference2BooleanMap
+     public Set<EntityPlayer> trackedPlayers = trackedPlayerMap.keySet();
+     // PaperSpigot end
+ 

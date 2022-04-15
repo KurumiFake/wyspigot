@@ -1,0 +1,33 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: SuicidalKids <kfian294ma4@gmail.com>
+Date: Mon, 21 Sep 2020 04:56:07 +0100
+Subject: [PATCH] (IonSpigot) Fix Sand Unloading
+
+
+diff --git a/src/main/java/me/suicidalkids/ion/IonWorldConfig.java b/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
+index bad9040fb389315e0aa34607c8014dfa163d2cce..507592f3b5e42679c6079c3ce84d4214137629cb 100644
+--- a/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
++++ b/src/main/java/me/suicidalkids/ion/IonWorldConfig.java
+@@ -97,4 +97,9 @@ public class IonWorldConfig {
+         reducedDensityRays = getBoolean("explosions.reduced-density-rays", false);
+     }
+ 
++    public boolean fixSandUnloading;
++    private void FixSandUnloading() {
++        fixSandUnloading = getBoolean("sand.fix-unloading", false);
++    }
++
+ }
+diff --git a/src/main/java/net/minecraft/server/BlockFalling.java b/src/main/java/net/minecraft/server/BlockFalling.java
+index 1d952b82aafb8b1ff8cbd4d4a23b02179f38af56..5c7912492e9342c82e771d42da4969fb5c0591e7 100644
+--- a/src/main/java/net/minecraft/server/BlockFalling.java
++++ b/src/main/java/net/minecraft/server/BlockFalling.java
+@@ -34,7 +34,7 @@ public class BlockFalling extends Block {
+         if (canFall(world, blockposition.down()) && blockposition.getY() >= 0) {
+             byte b0 = 32;
+ 
+-            if (!BlockFalling.instaFall && world.areChunksLoadedBetween(blockposition.a(-b0, -b0, -b0), blockposition.a(b0, b0, b0))) {
++            if (world.ionConfig.fixSandUnloading || !BlockFalling.instaFall && world.areChunksLoadedBetween(blockposition.a(-b0, -b0, -b0), blockposition.a(b0, b0, b0))) {
+                 if (!world.isClientSide) {
+                     // PaperSpigot start - Add FallingBlock source location API
+                     org.bukkit.Location loc = new org.bukkit.Location(world.getWorld(), (double) ((float) blockposition.getX() + 0.5F), (double) blockposition.getY(), (double) ((float) blockposition.getZ() + 0.5F));
