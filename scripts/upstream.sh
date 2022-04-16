@@ -12,32 +12,32 @@ git submodule update --init --recursive
 
 if [[ "$1" == up* ]]; then
     (
-        cd "$basedir/Paper/"
+        cd "$basedir/FlamePaper/"
 		git fetch && git reset --hard origin/ver/1.8.8
         cd ../
         git add Paper
     )
 fi
 
-paperVer=$(gethead Paper)
-cd "$basedir/Paper"
+flamepaperVer=$(gethead Paper)
+cd "$basedir/FlamePaper"
 
 ./remap.sh && ./decompile.sh && ./init.sh && ./newApplyPatches.sh
 
-cd "PaperSpigot-Server"
+cd "FlamePaper-Server"
 mcVer=$(mvn -o org.apache.maven.plugins:maven-help-plugin:3.2.0:evaluate -Dexpression=minecraft_version | sed -n -e '/^\[.*\]/ !{ /^[0-9]/ { p; q } }')
 
 basedir
 . $basedir/scripts/importmcdev.sh
 
 minecraftversion=1.8.8
-version=$(echo -e "Paper: $paperVer\nmc-dev:$importedmcdev")
+version=$(echo -e "FlamePaper: $flamepaperVer\nmc-dev:$importedmcdev")
 tag="${minecraftversion}-${mcVer}-$(echo -e $version | shasum | awk '{print $1}')"
-echo "$tag" > "$basedir"/current-paper
+echo "$tag" > "$basedir"/current-flamepaper
 
 "$basedir"/scripts/generatesources.sh
 
-cd Paper/
+cd FlamePaper/
 
 function tag {
 (
@@ -52,12 +52,12 @@ echo "Tagging as $tag"
 echo -e "$version"
 
 forcetag=0
-if [ "$(cat "$basedir"/current-paper)" != "$tag" ]; then
+if [ "$(cat "$basedir"/current-flamepaper)" != "$tag" ]; then
     forcetag=1
 fi
 
-tag PaperSpigot-API $forcetag
-tag PaperSpigot-Server $forcetag
+tag FlamePaper-API $forcetag
+tag FlamePaper-Server $forcetag
 
-pushRepo PaperSpigot-API $PAPER_API_REPO $tag
-pushRepo PaperSpigot-Server $PAPER_SERVER_REPO $tag
+pushRepo FlamePaper-API $FLAMEPAPER_API_REPO $tag
+pushRepo FlamePaper-Server $FLAMEPAPER_SERVER_REPO $tag

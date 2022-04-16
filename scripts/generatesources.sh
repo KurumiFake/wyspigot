@@ -10,10 +10,10 @@ done
 
 
 cd $basedir
-paperVer=$(cat current-paper)
+flamepaperVer=$(cat current-flamepaper)
 
-minecraftversion=$(cat "$basedir/Paper/BuildData/info.json" | grep minecraftVersion | cut -d '"' -f 4)
-decompile="Paper/work/$minecraftversion/"
+minecraftversion=$(cat "$basedir/FlamePaper/PaperSpigot/BuildData/info.json" | grep minecraftVersion | cut -d '"' -f 4)
+decompile="FlamePaper/PaperSpigot/work/$minecraftversion/"
 
 mkdir -p mc-dev/src/net/minecraft/server
 
@@ -25,7 +25,7 @@ fi
 rm src/net/minecraft/server/*.java
 cp -r $basedir/$decompile/net/minecraft/server/* src/net/minecraft/server
 
-base="$basedir/Paper/PaperSpigot-Server/src/main/java/net/minecraft/server"
+base="$basedir/FlamePaper/FlamePaper-Server/src/main/java/net/minecraft/server"
 cd $basedir/mc-dev/src/net/minecraft/server/
 for file in $(/bin/ls $base)
 do
@@ -36,5 +36,5 @@ done
 cd $basedir/mc-dev
 git add . -A
 git commit . -m "mc-dev"
-git tag -a "$paperVer" -m "$paperVer" 2>/dev/null
-pushRepo . $MCDEV_REPO $paperVer
+git tag -a "$flamepaperVer" -m "$flamepaperVer" 2>/dev/null
+pushRepo . $MCDEV_REPO $flamepaperVer

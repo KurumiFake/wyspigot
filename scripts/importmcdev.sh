@@ -8,8 +8,8 @@ while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symli
 done
 . $(dirname $SOURCE)/init.sh
 
-workdir="$basedir"/Paper/work
-minecraftversion=$(cat "$basedir/Paper/BuildData/info.json" | grep minecraftVersion | cut -d '"' -f 4)
+workdir="$basedir"/FlamePaper/PaperSpigot/work
+minecraftversion=$(cat "$basedir/FlamePaper/PaperSpigot/BuildData/info.json" | grep minecraftVersion | cut -d '"' -f 4)
 decompiledir=$workdir/$minecraftversion
 
 nms="net/minecraft/server"
@@ -26,13 +26,13 @@ function containsElement {
 
 export importedmcdev=""
 function import {
-    if [ -f "$basedir/Paper/PaperSpigot-Server/src/main/java/$nms/$1.java" ]; then
+    if [ -f "$basedir/FlamePaper/FlamePaper-Server/src/main/java/$nms/$1.java" ]; then
         echo "ALREADY IMPORTED $1"
         return 0
     fi
     export importedmcdev="$importedmcdev $1"
     file="${1}.java"
-    target="$basedir/Paper/PaperSpigot-Server/src/main/java/$nms/$file"
+    target="$basedir/FlamePaper/FlamePaper-Server/src/main/java/$nms/$file"
     base="$decompiledir/$nms/$file"
 
     if [[ ! -f "$target" ]]; then
@@ -51,7 +51,7 @@ function importLibrary {
     shift 3
     for file in "$@"; do
         file="$prefix/$file"
-        target="$basedir/Paper/PaperSpigot-Server/src/main/java/$file"
+        target="$basedir/FlamePaper/FlamePaper-Server/src/main/java/$file"
         targetdir=$(dirname "$target")
         mkdir -p "${targetdir}"
         base="$workdir/Minecraft/$minecraftversion/libraries/${group}/${lib}/$file"
@@ -65,7 +65,7 @@ function importLibrary {
 }
 
 (
-    cd Paper/PaperSpigot-Server/
+    cd FlamePaper/FlamePaper-Server/
     lastlog=$(git log -1 --oneline)
     if [[ "$lastlog" = *"WYSpIgot-Extra mc-dev Imports"* ]]; then
         git reset --hard HEAD^
@@ -80,7 +80,7 @@ nonnms=$(cat patches/server/* | grep "create mode " | grep -Po "src/main/java/ne
 for f in $files; do
     containsElement "$f" ${nonnms[@]}
     if [ "$?" == "1" ]; then
-        if [ ! -f "$basedir/Paper/PaperSpigot-Server/src/main/java/net/minecraft/server/$f.java" ]; then
+        if [ ! -f "$basedir/FlamePaper/FlamePaper-Server/src/main/java/net/minecraft/server/$f.java" ]; then
             if [ ! -f "$decompiledir/$nms/$f.java" ]; then
                 if [[ ! $f == WYSpIgot* ]]; then
                     echo " ERROR!!! Missing NMS $f";
@@ -109,7 +109,7 @@ import MCUtil
 #importLibrary com.mojang datafixerupper com/mojang/datafixers/util Either.java
 ################
 (
-    cd Paper/PaperSpigot-Server/
+    cd Paper/FlamePaper-Server/
     rm -rf nms-patches
     git add src -A
     echo -e "WYSpIgot-Extra mc-dev Imports\n\n$MODLOG" | git commit src -F -

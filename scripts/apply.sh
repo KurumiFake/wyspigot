@@ -25,7 +25,7 @@ done
 . $(dirname $SOURCE)/init.sh
 PS1="$"
 
-paperVer=$(cat current-paper)
+flamepaperVer=$(cat current-flamepaper)
 gpgsign="$(git config commit.gpgsign || echo "false")"
 echo "Rebuilding Forked projects.... "
 function applyPatch {
@@ -83,8 +83,8 @@ function enableCommitSigningIfNeeded {
     echo "Importing MC-DEV"
     ./scripts/importmcdev.sh "$basedir" || exit 1
 (
-    (applyPatch Paper/PaperSpigot-API ${FORK_NAME}-API HEAD api $API_REPO &&
-    applyPatch Paper/PaperSpigot-Server ${FORK_NAME}-Server HEAD server $SERVER_REPO) || exit 1
+    (applyPatch FlamePaper/FlamePaper-API ${FORK_NAME}-API HEAD api $API_REPO &&
+    applyPatch FlamePaper/FlamePaper-Server ${FORK_NAME}-Server HEAD server $SERVER_REPO) || exit 1
     enableCommitSigningIfNeeded
 ) || (
     echo "Failed to apply patches"
