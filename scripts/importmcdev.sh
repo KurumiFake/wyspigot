@@ -109,7 +109,7 @@ import MCUtil
 #importLibrary com.mojang datafixerupper com/mojang/datafixers/util Either.java
 ################
 (
-    cd Paper/FlamePaper-Server/
+    cd FlamePaper/FlamePaper-Server/
     rm -rf nms-patches
     git add src -A
     echo -e "WYSpIgot-Extra mc-dev Imports\n\n$MODLOG" | git commit src -F -
