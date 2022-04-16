@@ -13,7 +13,7 @@ cd $basedir
 flamepaperVer=$(cat current-flamepaper)
 
 minecraftversion=$(cat "$basedir/FlamePaper/PaperSpigot/BuildData/info.json" | grep minecraftVersion | cut -d '"' -f 4)
-decompile="FlamePaper/PaperSpigot/work/$minecraftversion/"
+decompile="FlamePaper/work/$minecraftversion/"
 
 mkdir -p mc-dev/src/net/minecraft/server
 
