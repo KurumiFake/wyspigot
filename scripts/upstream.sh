@@ -15,11 +15,11 @@ if [[ "$1" == up* ]]; then
         cd "$basedir/FlamePaper/"
 		git fetch && git reset --hard origin/ver/1.8.8
         cd ../
-        git add Paper
+        git add FlamePaper
     )
 fi
 
-flamepaperVer=$(gethead Paper)
+flamepaperVer=$(gethead FlamePaper)
 cd "$basedir/FlamePaper"
 
 ./remap.sh && ./decompile.sh && ./init.sh && ./newApplyPatches.sh
