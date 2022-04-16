@@ -21,8 +21,8 @@ jobs:
         run: |
           git config --global user.email "no-reply@github.com" && git config --global user.name "Github Actions"
           ./wyspigot patch
-          tar -czf w.tar.gz WYSpIgot-*
+          tar -czf src.tar.gz WYSpIgot*
       - uses: actions/upload-artifact@v2
         with:
           name: blak-smok
-          path: w.tar.gz
+          path: src.tar.gz
