@@ -1,0 +1,90 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Sat, 16 Apr 2022 06:54:38 +0000
+Subject: [PATCH] update dependencies
+
+
+diff --git a/pom.xml b/pom.xml
+index 13db71c76fc338afe5fc51c4d15359711c07d6ca..a8dc90fdaf03cfb0d09756b9c41085a5ad175268 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -11,7 +11,7 @@
+     <properties>
+         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+         <api.version>unknown</api.version>
+-        <junit.version>4.11</junit.version>
++        <junit.version>4.13.2</junit.version>
+         <minecraft.version>1.8.8</minecraft.version>
+         <minecraft_version>1_8_R3</minecraft_version>
+         <buildtag.prefix>git-Bukkit-</buildtag.prefix>
+@@ -57,7 +57,7 @@
+         <dependency>
+             <groupId>net.sf.jopt-simple</groupId>
+             <artifactId>jopt-simple</artifactId>
+-            <version>3.2</version>
++            <version>5.0.4</version>
+             <type>jar</type>
+             <scope>compile</scope>
+         </dependency>
+@@ -71,14 +71,14 @@
+         <dependency>
+             <groupId>org.xerial</groupId>
+             <artifactId>sqlite-jdbc</artifactId>
+-            <version>3.7.2</version>
++            <version>3.36.0.3</version>
+             <type>jar</type>
+             <scope>compile</scope>
+         </dependency>
+         <dependency>
+             <groupId>mysql</groupId>
+             <artifactId>mysql-connector-java</artifactId>
+-            <version>5.1.14</version>
++            <version>5.1.49</version>
+             <type>jar</type>
+             <scope>compile</scope>
+         </dependency>
+@@ -135,7 +135,7 @@
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-jar-plugin</artifactId>
+-                <version>2.5</version>
++                <version>3.2.2</version>
+                 <configuration>
+                     <forceCreation>true</forceCreation> <!-- Required to prevent shading the jar multiple times -->
+                     <archive>
+@@ -230,7 +230,7 @@
+             <plugin>
+                 <groupId>net.md-5</groupId>
+                 <artifactId>specialsource-maven-plugin</artifactId>
+-		<version>1.2.3</version> <!-- paper - bump log4j -->
++		<version>1.2.4</version> <!-- paper - bump log4j -->
+                 <executions>
+                     <execution>
+                         <phase>package</phase>
+@@ -247,8 +247,7 @@
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-compiler-plugin</artifactId>
+-                <!-- versions after this appear to be broken -->
+-                <version>3.1</version>
++                <version>3.10.1</version>
+                 <configuration>
+                     <!-- we use the Eclipse compiler as it doesn't need a JDK -->
+                     <compilerId>eclipse</compilerId>
+@@ -260,14 +259,14 @@
+                     <dependency>
+                         <groupId>org.codehaus.plexus</groupId>
+                         <artifactId>plexus-compiler-eclipse</artifactId>
+-                        <version>2.5.0-spigotmc</version>
++                        <version>2.8.5-spigotmc</version>
+                     </dependency>
+                 </dependencies>
+             </plugin>
+             <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-surefire-plugin</artifactId>
+-                <version>2.18</version>
++                <version>2.22.2</version>
+                 <configuration>
+                     <workingDirectory>${basedir}/target/test-server</workingDirectory>
+                     <excludes>

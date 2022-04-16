@@ -1,32 +1,32 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: KurumiFake <kurumiisshidowife@gmail.com>
-Date: Thu, 14 Apr 2022 11:51:36 +0000
+Date: Sat, 16 Apr 2022 06:29:08 +0000
 Subject: [PATCH] pom changes
 
 
 diff --git a/pom.xml b/pom.xml
-index fe9d6d265b686ae1c373e4fdcd202b16673366f1..64782c826a7a2502d39c783e692ee02337f45015 100644
+index 6f4601d8fc5414616e9a4d4654088d63cbc4a8b6..c5b66e876fdee723508faae0389d8bc27c5a485c 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -4,18 +4,18 @@
      <modelVersion>4.0.0</modelVersion>
  
      <parent>
--        <groupId>org.github.paperspigot</groupId>
--        <artifactId>paperspigot-parent</artifactId>
+-        <groupId>dev._2lstudios</groupId>
+-        <artifactId>flamepaper-parent</artifactId>
 +        <groupId>me.kurumifake.wyspigot</groupId>
 +        <artifactId>wyspigot-parent</artifactId>
          <version>dev-SNAPSHOT</version>
      </parent>
  
--    <groupId>org.github.paperspigot</groupId>
--    <artifactId>paperspigot-api</artifactId>
+-    <groupId>dev._2lstudios</groupId>
+-    <artifactId>flamepaper-api</artifactId>
 +    <groupId>me.kurumifake.wyspigot</groupId>
 +    <artifactId>wyspigot-api</artifactId>
      <version>1.8.8-R0.1-SNAPSHOT</version>
      <packaging>jar</packaging>
  
--    <name>PaperSpigot-API</name>
+-    <name>FlamePaper-API</name>
 -    <url>https://hub.spigotmc.org/stash/projects/PAPER/</url>
 +    <name>WYSpIgot-API</name>
 +    <url>https://github.com/KurumiFake/wyspigot</url>
@@ -38,7 +38,7 @@ index fe9d6d265b686ae1c373e4fdcd202b16673366f1..64782c826a7a2502d39c783e692ee023
              <scope>compile</scope>
          </dependency>
 -        <!-- bundled with Minecraft, should be kept in sync -->
-+        <!-- bundled with Minecraft, should be kept in sync --> <!-- wyspigot - hrjdjkwndhfisni -->
++        <!-- bundled with Minecraft, should be kept in sync --> <!-- wyspigot - it works idc -->
          <dependency>
              <groupId>com.google.code.gson</groupId>
              <artifactId>gson</artifactId>
@@ -65,18 +65,17 @@ index fe9d6d265b686ae1c373e4fdcd202b16673366f1..64782c826a7a2502d39c783e692ee023
              <scope>test</scope>
          </dependency>
          <dependency>
-@@ -120,8 +120,8 @@
+@@ -120,8 +120,7 @@
              <plugin>
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-compiler-plugin</artifactId>
 -                <!-- versions after this appear to be broken -->
 -                <version>3.1</version>
-+                <!-- versions after this appear to be broken --> <!-- wyspigot - hrjdjkwndhfisni -->
 +                <version>3.10.1</version>
                  <configuration>
                      <!-- we use the Eclipse compiler as it doesn't need a JDK -->
                      <compilerId>eclipse</compilerId>
-@@ -133,14 +133,14 @@
+@@ -133,14 +132,14 @@
                      <dependency>
                          <groupId>org.codehaus.plexus</groupId>
                          <artifactId>plexus-compiler-eclipse</artifactId>

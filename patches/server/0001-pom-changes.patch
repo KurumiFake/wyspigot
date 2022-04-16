@@ -1,0 +1,47 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Sat, 16 Apr 2022 06:53:34 +0000
+Subject: [PATCH] pom changes
+
+
+diff --git a/pom.xml b/pom.xml
+index 421dd106e520f31b3196f7d874efed00ed5cd13b..13db71c76fc338afe5fc51c4d15359711c07d6ca 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -1,12 +1,12 @@
+ <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+     <modelVersion>4.0.0</modelVersion>
+-    <groupId>dev._2lstudios</groupId>
+-    <artifactId>flamepaper</artifactId>
++    <groupId>me.kurumifake.wyspigot</groupId>
++    <artifactId>wyspigot</artifactId>
+     <packaging>jar</packaging>
+     <version>1.8.8-R0.1-SNAPSHOT</version>
+-    <name>FlamePaper</name>
+-    <url>https://hub.spigotmc.org/stash/projects/PAPER/</url>
++    <name>WYSpIgot</name>
++    <url>https://github.com/KurumiFake/wyspigot</url>
+ 
+     <properties>
+         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+@@ -22,8 +22,8 @@
+     </properties>
+ 
+     <parent>
+-        <groupId>dev._2lstudios</groupId>
+-        <artifactId>flamepaper-parent</artifactId>
++        <groupId>me.kurumifake.wyspigot</groupId>
++        <artifactId>wyspigot-parent</artifactId>
+         <version>dev-SNAPSHOT</version>
+         <relativePath>../pom.xml</relativePath>
+     </parent>
+@@ -120,7 +120,7 @@
+             <artifactId>gitdescribe-maven-plugin</artifactId>
+             <version>1.3</version>
+             <configuration>
+-                <outputPrefix>git-PaperSpigot-</outputPrefix>
++                <outputPrefix>git-WYSpIgot-</outputPrefix>
+                 <scmDirectory>..</scmDirectory>
+             </configuration>
+             <executions>
