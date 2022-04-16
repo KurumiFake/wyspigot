@@ -1,0 +1,111 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Techcable <Techcable@outlook.com>
+Date: Sat, 5 Sep 2015 11:08:15 -0700
+Subject: [PATCH] (TacoSpigot) Fix compile issues
+
+
+diff --git a/src/main/java/net/minecraft/server/BlockStateBoolean.java b/src/main/java/net/minecraft/server/BlockStateBoolean.java
+index 7fb09600e103a6428a010eb511bf97ca3a955106..c3c94cb69ff0ccc64cab5ebf6b97f660963b61a8 100644
+--- a/src/main/java/net/minecraft/server/BlockStateBoolean.java
++++ b/src/main/java/net/minecraft/server/BlockStateBoolean.java
+@@ -23,7 +23,11 @@ public class BlockStateBoolean extends BlockState<Boolean> {
+         return obool.toString();
+     }
+ 
++    // TacoSpigot start - fix stupid generic thingies
++    /*
+     public String a(Comparable comparable) {
+         return this.a((Boolean) comparable);
+     }
++    */
++    // CraftBukkit end
+ }
+diff --git a/src/main/java/net/minecraft/server/BlockStateEnum.java b/src/main/java/net/minecraft/server/BlockStateEnum.java
+index 0b555dff8ca4252b98857797b5d547859169079d..d10d79999d1dd622754b259e66b59f2f71e51fc4 100644
+--- a/src/main/java/net/minecraft/server/BlockStateEnum.java
++++ b/src/main/java/net/minecraft/server/BlockStateEnum.java
+@@ -18,10 +18,10 @@ public class BlockStateEnum<T extends Enum<T> & INamable> extends BlockState<T>
+     protected BlockStateEnum(String s, Class<T> oclass, Collection<T> collection) {
+         super(s, oclass);
+         this.a = ImmutableSet.copyOf(collection);
+-        Iterator iterator = collection.iterator();
++        Iterator<T> iterator = collection.iterator(); // TacoSpigot - generic iterator
+ 
+         while (iterator.hasNext()) {
+-            Enum oenum = (Enum) iterator.next();
++            T oenum = iterator.next(); // TacoSpigot - generics
+             String s1 = ((INamable) oenum).getName();
+ 
+             if (this.b.containsKey(s1)) {
+@@ -57,7 +57,11 @@ public class BlockStateEnum<T extends Enum<T> & INamable> extends BlockState<T>
+         return new BlockStateEnum(s, oclass, collection);
+     }
+ 
++    // TacoSpigot start - fix stupid generic thingies
++    /*
+     public String a(Comparable comparable) {
+         return this.a((Enum) comparable);
+     }
++    */
++    // TacoSpigot end
+ }
+diff --git a/src/main/java/net/minecraft/server/BlockStateInteger.java b/src/main/java/net/minecraft/server/BlockStateInteger.java
+index 4e7e489c236cf5e88658cfb694c3d49c32403e5c..a492201704d02d24f4c0e5435b3fe5e1b240698f 100644
+--- a/src/main/java/net/minecraft/server/BlockStateInteger.java
++++ b/src/main/java/net/minecraft/server/BlockStateInteger.java
+@@ -61,7 +61,11 @@ public class BlockStateInteger extends BlockState<Integer> {
+         return integer.toString();
+     }
+ 
++    // TacoSpigot start - fix stupid generic thingies
++    /*
+     public String a(Comparable comparable) {
+         return this.a((Integer) comparable);
+     }
++    */
++    // TacoSpigot end
+ }
+diff --git a/src/main/java/net/minecraft/server/BlockStateList.java b/src/main/java/net/minecraft/server/BlockStateList.java
+index 8a815a64cd793feaea414b0a0d92709818aff525..7e91392fa5d1ade853af65d76d796f69fe1324f3 100644
+--- a/src/main/java/net/minecraft/server/BlockStateList.java
++++ b/src/main/java/net/minecraft/server/BlockStateList.java
+@@ -123,7 +123,7 @@ public class BlockStateList {
+             if (!this.b.containsKey(iblockstate)) {
+                 throw new IllegalArgumentException("Cannot get property " + iblockstate + " as it does not exist in " + this.a.P());
+             } else {
+-                return (Comparable) iblockstate.b().cast(this.b.get(iblockstate));
++                return iblockstate.b().cast(this.b.get(iblockstate)); // TacoSpigot - remove illegal and unnecessary cast
+             }
+         }
+ 
+diff --git a/src/main/java/net/minecraft/server/CommandScoreboard.java b/src/main/java/net/minecraft/server/CommandScoreboard.java
+index 27d08a7de54de062041a107490a9d4684872ec8b..5bf61b039191d9f068060003f48d9e3814cf8c8e 100644
+--- a/src/main/java/net/minecraft/server/CommandScoreboard.java
++++ b/src/main/java/net/minecraft/server/CommandScoreboard.java
+@@ -13,6 +13,13 @@ import java.util.Set;
+ 
+ public class CommandScoreboard extends CommandAbstract {
+ 
++    // TacoSpigot start - fix compile errors
++    @Override
++    public int compareTo(ICommand o) {
++        return super.a(o);
++    }
++    // TacoSpigot end
++
+     public CommandScoreboard() {}
+ 
+     public String getCommand() {
+diff --git a/src/main/java/net/minecraft/server/PathfinderGoalNearestAttackableTarget.java b/src/main/java/net/minecraft/server/PathfinderGoalNearestAttackableTarget.java
+index 5540dde51885bc7579f2f86808ac1663c3c6874d..5cdc2638b153d3b80531c959c9f8f82f5d2a4793 100644
+--- a/src/main/java/net/minecraft/server/PathfinderGoalNearestAttackableTarget.java
++++ b/src/main/java/net/minecraft/server/PathfinderGoalNearestAttackableTarget.java
+@@ -70,7 +70,7 @@ public class PathfinderGoalNearestAttackableTarget<T extends EntityLiving> exten
+             return false;
+         } else {
+             double d0 = this.f();
+-            List list = this.e.world.a(this.a, this.e.getBoundingBox().grow(d0, 4.0D, d0), Predicates.and(this.c, IEntitySelector.d));
++            List list = this.e.world.a(this.a, this.e.getBoundingBox().grow(d0, 4.0D, d0), Predicates.and((Predicate) this.c, (Predicate) IEntitySelector.d)); // TacoSpigot - the eclipse compiler can't understand this, so make it generic
+ 
+             Collections.sort(list, this.b);
+             if (list.isEmpty()) {
