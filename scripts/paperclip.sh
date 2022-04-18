@@ -8,7 +8,7 @@ basedir="$(cd "$1" && pwd -P)"
 workdir="$basedir/FlamePaper/work"
 localworkdir="$basedir/work"
 mcver=1.8.8
-paperjar="$basedir/WYSpIgot-Server/target/wyspigot-1.8.8-R0.1-SNAPSHOT.jar"
+paperjar="$basedir/WYSpIgot-Server/target/wyspigot.jar"
 vanillajar="$workdir/$mcver/$mcver.jar"
 
 cd "$localworkdir/Paperclip"
