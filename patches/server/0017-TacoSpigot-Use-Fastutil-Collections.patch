@@ -15,7 +15,7 @@ These collections are super fast as seen
 http://java-performance.info/hashmap-overview-jdk-fastutil-goldman-sachs-hppc-koloboke-trove-january-2015/
 
 diff --git a/pom.xml b/pom.xml
-index a8dc90fdaf03cfb0d09756b9c41085a5ad175268..0c6a868700cc0ff44bbe26138cded7f1a1e565d1 100644
+index 2ea23a6cd9b80ce52f1449928afd62ec3415097f..cdd732e5b95a5ebe36738810a8c7ab54610911bd 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -34,6 +34,11 @@
@@ -28,8 +28,8 @@ index a8dc90fdaf03cfb0d09756b9c41085a5ad175268..0c6a868700cc0ff44bbe26138cded7f1
 +            <version>8.5.8</version> <!-- WYSpIgot - uodate dependencies -->
 +        </dependency>
          <dependency>
-             <groupId>dev._2lstudios</groupId>
-             <artifactId>flamepaper-api</artifactId>
+             <groupId>me.kurumifake.wyspigot</groupId>
+             <artifactId>wyspigot-api</artifactId>
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 index 2b5caf8ec000b05064dce186033ea0d3783c65e5..a74c3eed1b30dc2e82c6a7ec3d9ccc17e81e17ef 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java

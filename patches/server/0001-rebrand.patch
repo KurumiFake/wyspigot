@@ -5,7 +5,7 @@ Subject: [PATCH] rebrand
 
 
 diff --git a/pom.xml b/pom.xml
-index 421dd106e520f31b3196f7d874efed00ed5cd13b..13db71c76fc338afe5fc51c4d15359711c07d6ca 100644
+index 421dd106e520f31b3196f7d874efed00ed5cd13b..d0543cc7bbd4dc048784594fa4a74ca78855e984 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,12 +1,12 @@
@@ -36,6 +36,26 @@ index 421dd106e520f31b3196f7d874efed00ed5cd13b..13db71c76fc338afe5fc51c4d1535971
          <version>dev-SNAPSHOT</version>
          <relativePath>../pom.xml</relativePath>
      </parent>
+@@ -35,8 +35,8 @@
+             <version>3.0.3</version>
+         </dependency>
+         <dependency>
+-            <groupId>dev._2lstudios</groupId>
+-            <artifactId>flamepaper-api</artifactId>
++            <groupId>me.kurumifake.wyspigot</groupId>
++            <artifactId>wyspigot-api</artifactId>
+             <version>${project.version}</version>
+             <type>jar</type>
+             <scope>compile</scope>
+@@ -112,7 +112,7 @@
+ 
+     <!-- This builds a completely 'ready to start' jar with all dependencies inside -->
+     <build>
+-        <finalName>FlamePaper</finalName>
++        <finalName>wyspigot</finalName>
+         <defaultGoal>install</defaultGoal>
+         <plugins>
+             <plugin>
 @@ -120,7 +120,7 @@
              <artifactId>gitdescribe-maven-plugin</artifactId>
              <version>1.3</version>
