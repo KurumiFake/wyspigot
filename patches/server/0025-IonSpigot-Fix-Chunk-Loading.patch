@@ -6,10 +6,10 @@ Subject: [PATCH] (IonSpigot) Fix Chunk Loading
 Fixed an oversight with loading surrounding chunks that caused entities to not load any chunks if the entity was travelling to the south or east.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 03bc6c5ab7f4c3f9f271ee1b87dec27fd072400f..13dd5a70370188612adbd509f5284e93d212b44e 100644
+index 8ab97d103043b66b89ccf56b76ae42dff0114226..583d84a635ecc1d77c924217ec5398907f6ba74c 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -424,11 +424,31 @@ public abstract class Entity implements ICommandListener {
+@@ -423,11 +423,31 @@ public abstract class Entity implements ICommandListener {
       * PaperSpigot - Load surrounding chunks the entity is moving through
       */
      public void loadChunks() {

@@ -328,57 +328,6 @@ index 7e35d33548163fe20b98ddd9f14b9394b2ef4d2a..fdb0cf85e5011e64f13866ae673a029a
 +    public T getByValueId(int id);
 +    // TacoSpigot end
  }
-diff --git a/src/main/java/net/minecraft/server/PacketDataSerializer.java.rej b/src/main/java/net/minecraft/server/PacketDataSerializer.java.rej
-new file mode 100644
-index 0000000000000000000000000000000000000000..68ad9058883c06b08044294db39795436359125b
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/PacketDataSerializer.java.rej
-@@ -0,0 +1,24 @@
-+--- src/main/java/net/minecraft/server/PacketDataSerializer.java
-++++ src/main/java/net/minecraft/server/PacketDataSerializer.java
-+@@ -61,9 +76,20 @@ public class PacketDataSerializer extends ByteBuf {
-+         this.writeBytes(abyte);
-+     }
-+ 
-++    // TacoSpigot start
-++    private static final int DEFAULT_LIMIT = Short.MAX_VALUE;
-++    private static final int LARGE_PACKET_LIMIT = Short.MAX_VALUE * 1024;
-+     public byte[] a() {
-+-        byte[] abyte = new byte[this.e()];
-++        // TacoSpigot start
-++        int limit = allowLargePackets ? LARGE_PACKET_LIMIT : DEFAULT_LIMIT;
-++        return readByteArray(limit);
-++    }
-+ 
-++    public byte[] readByteArray(int limit) {
-++        int len = this.e();
-++        if (len > limit) throw new DecoderException("The received a byte array longer than allowed " + len + " > " + limit);
-++        byte[] abyte = new byte[len];
-++        // TacoSpigot end
-+         this.readBytes(abyte);
-+         return abyte;
-+     }
-diff --git a/src/main/java/net/minecraft/server/PacketLoginInEncryptionBegin.java.rej b/src/main/java/net/minecraft/server/PacketLoginInEncryptionBegin.java.rej
-new file mode 100644
-index 0000000000000000000000000000000000000000..37cdc8c83ac205df0157c13c3192c6c445b0271e
---- /dev/null
-+++ b/src/main/java/net/minecraft/server/PacketLoginInEncryptionBegin.java.rej
-@@ -0,0 +1,15 @@
-+--- src/main/java/net/minecraft/server/PacketLoginInEncryptionBegin.java
-++++ src/main/java/net/minecraft/server/PacketLoginInEncryptionBegin.java
-+@@ -12,8 +12,10 @@ public class PacketLoginInEncryptionBegin implements Packet<PacketLoginInListene
-+     public PacketLoginInEncryptionBegin() {}
-+ 
-+     public void a(PacketDataSerializer packetdataserializer) throws IOException {
-+-        this.a = packetdataserializer.a();
-+-        this.b = packetdataserializer.a();
-++        // TacoSpigot start - limit to 256 bytes
-++        this.a = packetdataserializer.readByteArray(256);
-++        this.b = packetdataserializer.readByteArray(256);
-++        // TacoSpigot end
-+     }
-+ 
-+     public void b(PacketDataSerializer packetdataserializer) throws IOException {
 diff --git a/src/main/java/net/techcable/tacospigot/BlockStateRegistry.java b/src/main/java/net/techcable/tacospigot/BlockStateRegistry.java
 new file mode 100644
 index 0000000000000000000000000000000000000000..5678ed35accc10d2ba20d6f4612e74200fa64f47

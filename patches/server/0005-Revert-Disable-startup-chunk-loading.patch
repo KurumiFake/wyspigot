@@ -1,0 +1,60 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: KurumiFake <kurumiisshidowife@gmail.com>
+Date: Mon, 18 Apr 2022 10:10:35 +0000
+Subject: [PATCH] Revert "Disable startup chunk loading"
+
+This reverts commit 968420e88d728c66507276a333d3b795d8928ea3.
+
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index 98d264ed563fa2a028d5c6a4c10d89b26c71f57d..7832f6d8319b07a6db3357fc03ed50473c9dfb79 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -328,12 +328,47 @@ public abstract class MinecraftServer implements Runnable, ICommandListener, IAs
+     }
+ 
+     protected void k() {
++        boolean flag = true;
++        boolean flag1 = true;
++        boolean flag2 = true;
++        boolean flag3 = true;
++        int i = 0;
++
+         this.b("menu.generatingTerrain");
++        byte b0 = 0;
++
++        // CraftBukkit start - fire WorldLoadEvent and handle whether or not to keep the spawn in memory
++        for (int m = 0; m < worlds.size(); m++) {
++            WorldServer worldserver = this.worlds.get(m);
++            LOGGER.info("Preparing start region for level " + m + " (Seed: " + worldserver.getSeed() + ")");
++
++            if (!worldserver.getWorld().getKeepSpawnInMemory()) {
++                continue;
++            }
++
++            BlockPosition blockposition = worldserver.getSpawn();
++            long j = az();
++            i = 0;
++
++            for (int k = -192; k <= 192 && this.isRunning(); k += 16) {
++                for (int l = -192; l <= 192 && this.isRunning(); l += 16) {
++                    long i1 = az();
++
++                    if (i1 - j > 1000L) {
++                        this.a_("Preparing spawn area", i * 100 / 625);
++                        j = i1;
++                    }
++
++                    ++i;
++                    worldserver.chunkProviderServer.getChunkAt(blockposition.getX() + k >> 4, blockposition.getZ() + l >> 4);
++                }
++            }
++        }
+ 
+         for (WorldServer world : this.worlds) {
+             this.server.getPluginManager().callEvent(new org.bukkit.event.world.WorldLoadEvent(world.getWorld()));
+         }
+-        
++        // CraftBukkit end
+         this.s();
+     }
+ 

@@ -29,7 +29,7 @@ index 7a3e812f4cbca9be7edcfadff8aeb134f4011147..bad9040fb389315e0aa34607c8014dfa
 +
  }
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index c4bfd5fe663be67721164f849405f493c79ec765..03bc6c5ab7f4c3f9f271ee1b87dec27fd072400f 100644
+index 5d37fb8dda197b76397e2a1c575ce0b4e9f7ddf1..8ab97d103043b66b89ccf56b76ae42dff0114226 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -129,6 +129,7 @@ public abstract class Entity implements ICommandListener {
@@ -38,9 +38,9 @@ index c4bfd5fe663be67721164f849405f493c79ec765..03bc6c5ab7f4c3f9f271ee1b87dec27f
      public boolean forceExplosionKnockback; // CraftBukkit - SPIGOT-949
 +    public boolean isCannoningEntity; // IonSpigot
      public boolean inUnloadedChunk = false; // PaperSpigot - Remove entities in unloaded chunks
-     public boolean loadChunks = false; // PaperSpigot - Entities can load chunks they move through and keep them loaded
  
-@@ -175,6 +176,7 @@ public abstract class Entity implements ICommandListener {
+     // Spigot start
+@@ -174,6 +175,7 @@ public abstract class Entity implements ICommandListener {
              this.defaultActivationState = false;
          }
          // Spigot end
@@ -408,7 +408,7 @@ index f4ccd8d4dc1500eff49712a770648f0d31395251..9f33563e92c8f5dea6ed826e56e71ad8
      // PaperSpigot end
  }
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 8d7daf450725530bbf83caf62d5b60858ecb7d1f..4aee31ca0158b2893ee95ae0e38e6367b690a028 100644
+index cc131ebb0e9faf881bab0b378b4c0ce07ac1bfe0..996fbfec63300c2881fd444c9ff115d3c47aaccd 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -139,7 +139,12 @@ public abstract class World implements IBlockAccess {

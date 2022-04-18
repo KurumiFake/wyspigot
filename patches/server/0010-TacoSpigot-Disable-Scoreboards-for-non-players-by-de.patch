@@ -23,10 +23,10 @@ index 5bf61b039191d9f068060003f48d9e3814cf8c8e..3acb07461a3494b3a3ac801bc5a39def
  
                          if (scoreboard.addPlayerToTeam(s2, s)) {
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index c8b4e292849486eadfb437110466d6eafe275411..ca8cc5df8efce75418b3ee0d29f255991678a2ec 100644
+index 04a16e5be2ed6a10233afedfc1e811fcad1291a4..9beff7f8946ca01b5dbded0ad0bb27696d3a8c8e 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -1824,6 +1824,7 @@ public abstract class EntityLiving extends Entity {
+@@ -1830,6 +1830,7 @@ public abstract class EntityLiving extends Entity {
      }
  
      public ScoreboardTeamBase getScoreboardTeam() {
@@ -35,10 +35,10 @@ index c8b4e292849486eadfb437110466d6eafe275411..ca8cc5df8efce75418b3ee0d29f25599
      }
  
 diff --git a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
-index c1f297c1c72c123efa6cdf2af7ac91e609fb5a9f..a494d4b2ec86a63204da2a5c573f64f858e6db64 100644
+index 4b50e4dea87870be026356a81bc8747f8f70f55c..d9f47e45dd319228e74fc37ef401eceeaea71be1 100644
 --- a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
 +++ b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
-@@ -78,4 +78,9 @@ public class TacoSpigotWorldConfig {
+@@ -68,4 +68,9 @@ public class TacoSpigotWorldConfig {
      private void isArmorStandMoveWithoutGravity() {
          optimizeArmorStandMovement = getBoolean("armor-stand.optimize-movement", false); // Doesn't fully emulate vanilla behavior, see issue #1
      }

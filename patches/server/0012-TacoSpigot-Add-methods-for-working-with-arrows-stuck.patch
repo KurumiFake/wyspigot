@@ -6,10 +6,10 @@ Subject: [PATCH] (TacoSpigot) Add methods for working with arrows stuck in
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityLiving.java b/src/main/java/net/minecraft/server/EntityLiving.java
-index ca8cc5df8efce75418b3ee0d29f255991678a2ec..12257ad2401637936e62198fc994242c36580909 100644
+index 9beff7f8946ca01b5dbded0ad0bb27696d3a8c8e..bce7ccb98f47fd2a6c89e691e63a279c1d284650 100644
 --- a/src/main/java/net/minecraft/server/EntityLiving.java
 +++ b/src/main/java/net/minecraft/server/EntityLiving.java
-@@ -1166,10 +1166,21 @@ public abstract class EntityLiving extends Entity {
+@@ -1172,10 +1172,21 @@ public abstract class EntityLiving extends Entity {
          return (float) this.getAttributeInstance(GenericAttributes.maxHealth).getValue();
      }
  

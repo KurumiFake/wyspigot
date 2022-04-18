@@ -236,10 +236,10 @@ index 0000000000000000000000000000000000000000..7a3e812f4cbca9be7edcfadff8aeb134
 +
 +}
 diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
-index 088beb22b53ddf77dc182dd5ac39e1086d5279aa..6db887d9cbda13d03fa42e8dc3ad4be362f1eb21 100644
+index ce06694bd673cd3788d83f56abdbd52ea0005100..27889372914baa4db9607841a3e774e28576bdbe 100644
 --- a/src/main/java/net/minecraft/server/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/DedicatedServer.java
-@@ -181,6 +181,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+@@ -169,6 +169,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
              org.github.paperspigot.PaperSpigotConfig.init((File) options.valueOf("paper-settings"));
              org.github.paperspigot.PaperSpigotConfig.registerCommands();
              // PaperSpigot end
@@ -248,7 +248,7 @@ index 088beb22b53ddf77dc182dd5ac39e1086d5279aa..6db887d9cbda13d03fa42e8dc3ad4be3
              DedicatedServer.LOGGER.info("Generating keypair");
              this.a(MinecraftEncryption.b());
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 70c2cedffb33f3f44ce73dcb116374c868d56a7a..8d7daf450725530bbf83caf62d5b60858ecb7d1f 100644
+index 61a4466f222c3b9564bc6f849ae35381e3b8a927..cc131ebb0e9faf881bab0b378b4c0ce07ac1bfe0 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -165,6 +165,7 @@ public abstract class World implements IBlockAccess {

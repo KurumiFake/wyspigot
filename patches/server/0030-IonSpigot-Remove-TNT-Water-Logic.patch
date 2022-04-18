@@ -7,10 +7,10 @@ Remove the code for keeping TNT in sync with the server.
 This can cause players to easily timeout while near a cannon or at walls.
 
 diff --git a/src/main/java/net/minecraft/server/EntityTNTPrimed.java b/src/main/java/net/minecraft/server/EntityTNTPrimed.java
-index 872d9659c20a8f6931e35f41c58f56efeacd9c03..4e0433879de616b7bd5866048f588779e5ecc6c7 100644
+index 567739da316417af1b057311af621d0bed1f6bb7..e02aac2c0df7de0a478a2baaf86a913773d37882 100644
 --- a/src/main/java/net/minecraft/server/EntityTNTPrimed.java
 +++ b/src/main/java/net/minecraft/server/EntityTNTPrimed.java
-@@ -180,6 +180,8 @@ public class EntityTNTPrimed extends Entity {
+@@ -165,6 +165,8 @@ public class EntityTNTPrimed extends Entity {
      public boolean W() {
          if (!world.paperSpigotConfig.fixCannons) return super.W();
  
@@ -19,7 +19,7 @@ index 872d9659c20a8f6931e35f41c58f56efeacd9c03..4e0433879de616b7bd5866048f588779
          // Preserve velocity while calling the super method
          double oldMotX = this.motX;
          double oldMotY = this.motY;
-@@ -207,6 +209,8 @@ public class EntityTNTPrimed extends Entity {
+@@ -192,6 +194,8 @@ public class EntityTNTPrimed extends Entity {
                  }
              }
          }

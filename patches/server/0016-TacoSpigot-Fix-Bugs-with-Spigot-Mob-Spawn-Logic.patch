@@ -13,7 +13,7 @@ Specially with servers using smaller mob spawn ranges than view distance, as wel
 This patch returns mob counting to use all loaded chunks, and 17x17 division.
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index ab0d41cadabe4c010751994515925525df66dace..e4492a4dc6b1fa60a6be86331291b39c75483a76 100644
+index 167a3e9ccdaddacbc1139065c04475f14f7f695a..79322bd5fd642600c68079d456fc49ea74ec2d88 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -781,7 +781,7 @@ public class Chunk {

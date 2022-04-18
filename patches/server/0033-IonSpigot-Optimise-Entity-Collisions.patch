@@ -100,10 +100,10 @@ index bce7ccb98f47fd2a6c89e691e63a279c1d284650..e8b6e75dc43c9dcb0cb49119590e0b19
          if (this.ad() && !list.isEmpty()) { // Spigot: Add this.ad() condition
              numCollisions -= world.spigotConfig.maxCollisionsPerEntity; // Spigot
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 4aee31ca0158b2893ee95ae0e38e6367b690a028..9e2ac2f9efcb71578276a73407369de79316bf46 100644
+index 996fbfec63300c2881fd444c9ff115d3c47aaccd..2732e92a63fc5420908e5d4f4c0680cb4dadc94d 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -2621,6 +2621,28 @@ public abstract class World implements IBlockAccess {
+@@ -2614,6 +2614,28 @@ public abstract class World implements IBlockAccess {
          return null;
      }
  

@@ -5,10 +5,10 @@ Subject: [PATCH] (TacoSpigot) disable falling block stacking at 256
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityFallingBlock.java b/src/main/java/net/minecraft/server/EntityFallingBlock.java
-index 36c384eb9c2280e618eac770ce67ad0abfd7dc88..e3bfd8683647b5bd10b05937eb15183e3bbc9501 100644
+index 724948be760398b04626ca79ecb296619bc7a44c..ab979c6af21717393e74fac4e66c953a95f4db90 100644
 --- a/src/main/java/net/minecraft/server/EntityFallingBlock.java
 +++ b/src/main/java/net/minecraft/server/EntityFallingBlock.java
-@@ -113,7 +113,7 @@ public class EntityFallingBlock extends Entity {
+@@ -111,7 +111,7 @@ public class EntityFallingBlock extends Entity {
                      if (this.world.getType(blockposition).getBlock() != Blocks.PISTON_EXTENSION) {
                          this.die();
                          if (!this.e) {
@@ -18,10 +18,10 @@ index 36c384eb9c2280e618eac770ce67ad0abfd7dc88..e3bfd8683647b5bd10b05937eb15183e
                                      return;
                                  }
 diff --git a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
-index 3d91c8d953ba551e0c950f0a47e86fde0afa3be6..8c1f1a758a17db844e6dc3225d3a96c2ab48ed42 100644
+index 7996b222759e98743b013af3094665af7a46963e..d3197b9ae9697565bbe0dfe63985ce6193b6be86 100644
 --- a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
 +++ b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
-@@ -107,4 +107,7 @@ public class TacoSpigotWorldConfig {
+@@ -97,4 +97,7 @@ public class TacoSpigotWorldConfig {
      private void fixEastWest() {
          fixEastWest = getBoolean("fix-east-west-cannoning", false);
      }

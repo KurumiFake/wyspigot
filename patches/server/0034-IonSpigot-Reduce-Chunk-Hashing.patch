@@ -6,7 +6,7 @@ Subject: [PATCH] (IonSpigot) Reduce Chunk Hashing
 These changes are from Akarin, previously called TorchSpigot
 
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index b798575e8a1656076103ecb1e245096ad8e3ec11..e61d686983e2f5f3b0f647a5fc1daa9d7f280488 100644
+index a74c3eed1b30dc2e82c6a7ec3d9ccc17e81e17ef..5b61848a33cb63c3d9f419b4eb2747b129c397ce 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
 @@ -64,8 +64,9 @@ public class ChunkProviderServer implements IChunkProvider {
@@ -20,7 +20,7 @@ index b798575e8a1656076103ecb1e245096ad8e3ec11..e61d686983e2f5f3b0f647a5fc1daa9d
          if (chunk != null && chunk.world.paperSpigotConfig.useAsyncLighting && (chunk.pendingLightUpdates.get() > 0 || chunk.world.getTime() - chunk.lightUpdateTime < 20)) {
              return;
          }
-@@ -84,9 +85,9 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -73,9 +74,9 @@ public class ChunkProviderServer implements IChunkProvider {
          if (this.world.worldProvider.e()) {
              if (!this.world.c(i, j)) {
                  // CraftBukkit start
@@ -32,7 +32,7 @@ index b798575e8a1656076103ecb1e245096ad8e3ec11..e61d686983e2f5f3b0f647a5fc1daa9d
                  if (c != null) {
                      c.mustSave = true;
                  }
-@@ -94,9 +95,9 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -83,9 +84,9 @@ public class ChunkProviderServer implements IChunkProvider {
              }
          } else {
              // CraftBukkit start
@@ -44,7 +44,7 @@ index b798575e8a1656076103ecb1e245096ad8e3ec11..e61d686983e2f5f3b0f647a5fc1daa9d
              if (c != null) {
                  c.mustSave = true;
              }
-@@ -126,8 +127,9 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -115,8 +116,9 @@ public class ChunkProviderServer implements IChunkProvider {
      }
  
      public Chunk getChunkAt(int i, int j, Runnable runnable) {
@@ -56,7 +56,7 @@ index b798575e8a1656076103ecb1e245096ad8e3ec11..e61d686983e2f5f3b0f647a5fc1daa9d
          ChunkRegionLoader loader = null;
  
          if (this.chunkLoader instanceof ChunkRegionLoader) {
-@@ -154,8 +156,9 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -143,8 +145,9 @@ public class ChunkProviderServer implements IChunkProvider {
          return chunk;
      }
      public Chunk originalGetChunkAt(int i, int j) {
@@ -68,7 +68,7 @@ index b798575e8a1656076103ecb1e245096ad8e3ec11..e61d686983e2f5f3b0f647a5fc1daa9d
          boolean newChunk = false;
          // CraftBukkit end
  
-@@ -173,7 +176,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -162,7 +165,7 @@ public class ChunkProviderServer implements IChunkProvider {
                          CrashReportSystemDetails crashreportsystemdetails = crashreport.a("Chunk to be generated");
  
                          crashreportsystemdetails.a("Location", (Object) String.format("%d,%d", new Object[] { Integer.valueOf(i), Integer.valueOf(j)}));
@@ -77,7 +77,7 @@ index b798575e8a1656076103ecb1e245096ad8e3ec11..e61d686983e2f5f3b0f647a5fc1daa9d
                          crashreportsystemdetails.a("Generator", (Object) this.chunkProvider.getName());
                          throw new ReportedException(crashreport);
                      }
-@@ -181,7 +184,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -170,7 +173,7 @@ public class ChunkProviderServer implements IChunkProvider {
                  newChunk = true; // CraftBukkit
              }
  

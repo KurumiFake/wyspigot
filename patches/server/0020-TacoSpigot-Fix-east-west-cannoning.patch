@@ -5,10 +5,10 @@ Subject: [PATCH] (TacoSpigot) Fix east/west cannoning
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 85737bf7db885b0b3a8466c5c9b3ff62f76ebcd8..c4bfd5fe663be67721164f849405f493c79ec765 100644
+index 26cfd9a70ca6880224426199827dd56bec1766bd..5d37fb8dda197b76397e2a1c575ce0b4e9f7ddf1 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -536,11 +536,29 @@ public abstract class Entity implements ICommandListener {
+@@ -540,11 +540,29 @@ public abstract class Entity implements ICommandListener {
              this.a(this.getBoundingBox().c(0.0D, d1, 0.0D));
              boolean flag1 = this.onGround || d7 != d1 && d7 < 0.0D;
  
@@ -40,7 +40,7 @@ index 85737bf7db885b0b3a8466c5c9b3ff62f76ebcd8..c4bfd5fe663be67721164f849405f493
              for (iterator1 = list.iterator(); iterator1.hasNext(); d0 = axisalignedbb2.a(this.getBoundingBox(), d0)) {
                  axisalignedbb2 = (AxisAlignedBB) iterator1.next();
              }
-@@ -554,6 +572,8 @@ public abstract class Entity implements ICommandListener {
+@@ -558,6 +576,8 @@ public abstract class Entity implements ICommandListener {
              }
  
              this.a(this.getBoundingBox().c(0.0D, 0.0D, d2));
@@ -50,10 +50,10 @@ index 85737bf7db885b0b3a8466c5c9b3ff62f76ebcd8..c4bfd5fe663be67721164f849405f493
                  double d10 = d0;
                  double d11 = d1;
 diff --git a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
-index d32e8a4902272508901928e3f093ba4c5fa27552..3d91c8d953ba551e0c950f0a47e86fde0afa3be6 100644
+index 5c9027eeba054b87a64b18a4902b6adbb524bdbf..7996b222759e98743b013af3094665af7a46963e 100644
 --- a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
 +++ b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
-@@ -102,4 +102,9 @@ public class TacoSpigotWorldConfig {
+@@ -92,4 +92,9 @@ public class TacoSpigotWorldConfig {
      private void isOptimizeLiquidExplosions() {
          optimizeLiquidExplosions = getBoolean("tnt.optimize-liquid-explosions", true); // This seems like a pretty sane default
      }

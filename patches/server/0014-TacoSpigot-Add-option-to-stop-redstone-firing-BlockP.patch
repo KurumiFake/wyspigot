@@ -6,7 +6,7 @@ Subject: [PATCH] (TacoSpigot) Add option to stop redstone firing
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 6e2adc5143c5129837374a4a7509c063906011f5..4864c78191214a227b5e613b208beb511c1716dd 100644
+index 8dcac525d9d48cf3488c4e727a20142e4770a155..c14a4d55123766131bbdd7af19ed0276494d4827 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -573,7 +573,9 @@ public abstract class World implements IBlockAccess {
@@ -21,18 +21,16 @@ index 6e2adc5143c5129837374a4a7509c063906011f5..4864c78191214a227b5e613b208beb51
                      this.getServer().getPluginManager().callEvent(event);
  
 diff --git a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
-index 951126a63dd0d676b00c0878f99dd360a04d84fe..4892bff93659746c04a0921e7c2915dd269cd8b9 100644
+index e2e37b4c2fceef4c840a3e80ccc5033881fed967..cb83ab004100b762939c77311e506b0e0a31211f 100644
 --- a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
 +++ b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
-@@ -64,6 +64,11 @@ public class TacoSpigotWorldConfig {
-         return config.getString("world-settings." + worldName + "." + path, config.getString("world-settings.default." + path));
+@@ -78,4 +78,9 @@ public class TacoSpigotWorldConfig {
+     private void isGrassIgnoresLight() {
+         grassIgnoresLight = getBoolean("grass-ignores-light", false);
      }
- 
++
 +    public boolean isRedstoneFireBPE;
 +    private void isRedstoneFireBPE() {
 +        isRedstoneFireBPE = getBoolean("redstone-fire-BlockPhysicsEvent", true);
 +    }
-+
-     public boolean isHopperPushBased;
-     private void isHopperPushBased() {
-         isHopperPushBased = getBoolean("hopper.push-based", true);
+ }

@@ -18,7 +18,7 @@ index 064374aa86192a7f5fb907ea32d2a684f8fe17bf..c5e5aa7be9b3dcfc762fc55fd8b783db
  
      public PacketPlayInResourcePackStatus() {}
 diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
-index 4391ad7e7cf547b5e179c06e64b3a6e02cbe7a41..2aa3efcda8b840e973c449c8a589eed7a07c2041 100644
+index 71e4362d136f1f7567e335e4e6199e6820ef76c1..73d92dbfb0f4fa668421996638ea3dbdaa1f7194 100644
 --- a/src/main/java/net/minecraft/server/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/PlayerConnection.java
 @@ -849,7 +849,12 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList

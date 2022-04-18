@@ -19,13 +19,13 @@ index f256d71c9a570ce51b9f50a70e60ea86a8794ea6..22f3378b641a9eaa1833cbd6597cfac0
 +
  }
 diff --git a/src/main/java/net/minecraft/server/EntityEnderPearl.java b/src/main/java/net/minecraft/server/EntityEnderPearl.java
-index 2c94ae15bc164a1c8a633a917d98e79b9d2027b9..a7154ccc99c1f0d0c5fc42872ad1765c3766dbd4 100644
+index 4817e187e9291affe6675367353644137b7ae566..a1b61f9d94feb075e5d99549eef9a59b7f6f34e2 100644
 --- a/src/main/java/net/minecraft/server/EntityEnderPearl.java
 +++ b/src/main/java/net/minecraft/server/EntityEnderPearl.java
-@@ -23,6 +23,12 @@ public class EntityEnderPearl extends EntityProjectile {
+@@ -21,6 +21,12 @@ public class EntityEnderPearl extends EntityProjectile {
+     public EntityEnderPearl(World world, EntityLiving entityliving) {
          super(world, entityliving);
          this.c = entityliving;
-         this.loadChunks = world.paperSpigotConfig.loadUnloadedEnderPearls; // PaperSpigot
 +        // IonSpigot start - Lag Compensated Pearls
 +        if (entityliving instanceof EntityPlayer && world.ionConfig.lagCompensatedPearls) {
 +            ((EntityPlayer) entityliving).lagCompensatedTicking.add(this);
@@ -35,7 +35,7 @@ index 2c94ae15bc164a1c8a633a917d98e79b9d2027b9..a7154ccc99c1f0d0c5fc42872ad1765c
      }
  
      protected void a(MovingObjectPosition movingobjectposition) {
-@@ -106,7 +112,15 @@ public class EntityEnderPearl extends EntityProjectile {
+@@ -104,7 +110,15 @@ public class EntityEnderPearl extends EntityProjectile {
  
      }
  

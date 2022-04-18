@@ -15,7 +15,7 @@ These collections are super fast as seen
 http://java-performance.info/hashmap-overview-jdk-fastutil-goldman-sachs-hppc-koloboke-trove-january-2015/
 
 diff --git a/pom.xml b/pom.xml
-index 68eaf9c55a6c17b00725dd0bc94d4fcc77a9a571..5bf2bd83b4ef0e7dad9c6250cff38d3eef4f5cf2 100644
+index a8dc90fdaf03cfb0d09756b9c41085a5ad175268..0c6a868700cc0ff44bbe26138cded7f1a1e565d1 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -34,6 +34,11 @@
@@ -28,13 +28,13 @@ index 68eaf9c55a6c17b00725dd0bc94d4fcc77a9a571..5bf2bd83b4ef0e7dad9c6250cff38d3e
 +            <version>8.5.8</version> <!-- WYSpIgot - uodate dependencies -->
 +        </dependency>
          <dependency>
-             <groupId>me.kurumifake.wyspigot</groupId>
-             <artifactId>wyspigot-api</artifactId>
+             <groupId>dev._2lstudios</groupId>
+             <artifactId>flamepaper-api</artifactId>
 diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-index c4dab42bdf868f73f0c3875e8adfb852b2b02e18..8bcd152f46ad54cde59f3a56c1099848c0121565 100644
+index 2b5caf8ec000b05064dce186033ea0d3783c65e5..a74c3eed1b30dc2e82c6a7ec3d9ccc17e81e17ef 100644
 --- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
-@@ -25,16 +25,23 @@ import org.bukkit.event.world.ChunkUnloadEvent;
+@@ -25,17 +25,24 @@ import org.bukkit.event.world.ChunkUnloadEvent;
  import org.github.paperspigot.event.ServerExceptionEvent;
  import org.github.paperspigot.exception.ServerInternalException;
  // CraftBukkit end
@@ -53,14 +53,15 @@ index c4dab42bdf868f73f0c3875e8adfb852b2b02e18..8bcd152f46ad54cde59f3a56c1099848
 +    public LongSet unloadQueue = new LongArraySet(); // CraftBukkit - LongHashSet // TacoSpigot - LongHashSet -> HashArraySet
      public Chunk emptyChunk;
      public IChunkProvider chunkProvider;
-     private IChunkLoader chunkLoader;
+     // FlamePaper - Make chunkloader public
+     public IChunkLoader chunkLoader;
      public boolean forceChunkLoad = false; // CraftBukkit - true -> false
 -    public LongObjectHashMap<Chunk> chunks = new LongObjectHashMap<Chunk>();
 +    public Long2ObjectMap<Chunk> chunks = new Long2ObjectOpenHashMap<Chunk>(4096, 0.5f); // TacoSpigot - use trove Long2ObjectOpenHashMap instead of craftbukkit implementation (using inital capacity and load factor chosen by Amaranth in an old impl)
      public WorldServer world;
  
      public ChunkProviderServer(WorldServer worldserver, IChunkLoader ichunkloader, IChunkProvider ichunkprovider) {
-@@ -76,7 +83,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -66,7 +73,7 @@ public class ChunkProviderServer implements IChunkProvider {
          if (this.world.worldProvider.e()) {
              if (!this.world.c(i, j)) {
                  // CraftBukkit start
@@ -69,7 +70,7 @@ index c4dab42bdf868f73f0c3875e8adfb852b2b02e18..8bcd152f46ad54cde59f3a56c1099848
  
                  Chunk c = chunks.get(LongHash.toLong(i, j));
                  if (c != null) {
-@@ -86,7 +93,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -76,7 +83,7 @@ public class ChunkProviderServer implements IChunkProvider {
              }
          } else {
              // CraftBukkit start
@@ -78,7 +79,7 @@ index c4dab42bdf868f73f0c3875e8adfb852b2b02e18..8bcd152f46ad54cde59f3a56c1099848
  
              Chunk c = chunks.get(LongHash.toLong(i, j));
              if (c != null) {
-@@ -118,7 +125,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -108,7 +115,7 @@ public class ChunkProviderServer implements IChunkProvider {
      }
  
      public Chunk getChunkAt(int i, int j, Runnable runnable) {
@@ -87,7 +88,7 @@ index c4dab42bdf868f73f0c3875e8adfb852b2b02e18..8bcd152f46ad54cde59f3a56c1099848
          Chunk chunk = chunks.get(LongHash.toLong(i, j));
          ChunkRegionLoader loader = null;
  
-@@ -146,7 +153,7 @@ public class ChunkProviderServer implements IChunkProvider {
+@@ -136,7 +143,7 @@ public class ChunkProviderServer implements IChunkProvider {
          return chunk;
      }
      public Chunk originalGetChunkAt(int i, int j) {
@@ -96,8 +97,8 @@ index c4dab42bdf868f73f0c3875e8adfb852b2b02e18..8bcd152f46ad54cde59f3a56c1099848
          Chunk chunk = (Chunk) this.chunks.get(LongHash.toLong(i, j));
          boolean newChunk = false;
          // CraftBukkit end
-@@ -370,8 +377,12 @@ public class ChunkProviderServer implements IChunkProvider {
-         if (!this.world.savingDisabled) {
+@@ -360,8 +367,12 @@ public class ChunkProviderServer implements IChunkProvider {
+         if (canSave() || force) {
              // CraftBukkit start
              Server server = this.world.getServer();
 -            for (int i = 0; i < 100 && !this.unloadQueue.isEmpty(); ++i) {
@@ -174,10 +175,10 @@ index dec091e7311056650dd03a980b2c4aa8299fac4b..1fbbfaaedc679d8bc321faf84cae32dd
          for ( int i = 0; i < arraylist.size(); i++ )
          {
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index 87529552aa27fc89a542130a27a6b2bfdda44ccd..40a066ca5ee12182372552d704b08b55274bd190 100644
+index 068bfe1ed4763d8141e16e1244497ba92a663128..ff85a28da44079e73b7393cee9b181233cb2df6e 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
-@@ -402,7 +402,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+@@ -407,7 +407,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
                  int chunkX = World.keyToX( chunkCoord );
                  int chunkZ = World.keyToZ( chunkCoord );
                  // If unloaded, or in procedd of being unloaded, drop it
@@ -187,7 +188,7 @@ index 87529552aa27fc89a542130a27a6b2bfdda44ccd..40a066ca5ee12182372552d704b08b55
                      iter.remove();
                      continue;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 7640070937b361aeda4d200710deddfbbbc4fb42..584070c026634ebc8d0561e276cc663caf60036c 100644
+index 563fb62ad0f97b8c582024d5f60fa4bec4631917..1df845f20c527bba1ee1ee51a8a8e263e31a5700 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -219,7 +219,7 @@ public class CraftWorld implements World {
@@ -217,7 +218,7 @@ index 7640070937b361aeda4d200710deddfbbbc4fb42..584070c026634ebc8d0561e276cc663c
          net.minecraft.server.Chunk chunk = world.chunkProviderServer.chunks.get(LongHash.toLong(x, z));
  
          if (chunk == null) {
-@@ -1409,7 +1409,7 @@ public class CraftWorld implements World {
+@@ -1416,7 +1416,7 @@ public class CraftWorld implements World {
              }
  
              // Already unloading?

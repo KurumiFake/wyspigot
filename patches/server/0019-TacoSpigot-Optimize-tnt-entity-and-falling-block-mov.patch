@@ -8,10 +8,10 @@ This is configurable using the "tnt.optimize-movement" and
 "tnt.optimize-liquid-explosions" options respectively.
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 2da303feee4191d6a47108ef904d32958ce6a23d..85737bf7db885b0b3a8466c5c9b3ff62f76ebcd8 100644
+index 5971e4375c2526eb14d3b64f66754c1dc6d60f43..26cfd9a70ca6880224426199827dd56bec1766bd 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -515,7 +515,16 @@ public abstract class Entity implements ICommandListener {
+@@ -519,7 +519,16 @@ public abstract class Entity implements ICommandListener {
                  }
              }
  
@@ -29,7 +29,7 @@ index 2da303feee4191d6a47108ef904d32958ce6a23d..85737bf7db885b0b3a8466c5c9b3ff62
              AxisAlignedBB axisalignedbb = this.getBoundingBox();
  
              AxisAlignedBB axisalignedbb1;
-@@ -527,6 +536,8 @@ public abstract class Entity implements ICommandListener {
+@@ -531,6 +540,8 @@ public abstract class Entity implements ICommandListener {
              this.a(this.getBoundingBox().c(0.0D, d1, 0.0D));
              boolean flag1 = this.onGround || d7 != d1 && d7 < 0.0D;
  
@@ -38,7 +38,7 @@ index 2da303feee4191d6a47108ef904d32958ce6a23d..85737bf7db885b0b3a8466c5c9b3ff62
              AxisAlignedBB axisalignedbb2;
              Iterator iterator1;
  
-@@ -536,6 +547,8 @@ public abstract class Entity implements ICommandListener {
+@@ -540,6 +551,8 @@ public abstract class Entity implements ICommandListener {
  
              this.a(this.getBoundingBox().c(d0, 0.0D, 0.0D));
  
@@ -70,10 +70,10 @@ index b7d410eeb974eee7b26dce8e3b02ff2051e74f93..f4ccd8d4dc1500eff49712a770648f0d
          this.blocks.addAll(hashset);
          float f3 = this.size * 2.0F;
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 4864c78191214a227b5e613b208beb511c1716dd..e5bf755b1f3acb758f47eec27d586899bc213074 100644
+index c14a4d55123766131bbdd7af19ed0276494d4827..61a4466f222c3b9564bc6f849ae35381e3b8a927 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1235,6 +1235,8 @@ public abstract class World implements IBlockAccess {
+@@ -1232,6 +1232,8 @@ public abstract class World implements IBlockAccess {
  
          if (entity instanceof EntityItem) return arraylist; // PaperSpigot - Optimize item movement
          if (entity instanceof EntityArmorStand) return arraylist; // TacoSpigot - Optimize armor stand movement
@@ -83,12 +83,12 @@ index 4864c78191214a227b5e613b208beb511c1716dd..e5bf755b1f3acb758f47eec27d586899
          double d0 = 0.25D;
          List list = this.getEntities(entity, axisalignedbb.grow(d0, d0, d0));
 diff --git a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
-index 4892bff93659746c04a0921e7c2915dd269cd8b9..d32e8a4902272508901928e3f093ba4c5fa27552 100644
+index cb83ab004100b762939c77311e506b0e0a31211f..5c9027eeba054b87a64b18a4902b6adbb524bdbf 100644
 --- a/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
 +++ b/src/main/java/net/techcable/tacospigot/TacoSpigotWorldConfig.java
-@@ -93,4 +93,13 @@ public class TacoSpigotWorldConfig {
-     private void isGrassIgnoresLight() {
-         grassIgnoresLight = getBoolean("grass-ignores-light", false);
+@@ -83,4 +83,13 @@ public class TacoSpigotWorldConfig {
+     private void isRedstoneFireBPE() {
+         isRedstoneFireBPE = getBoolean("redstone-fire-BlockPhysicsEvent", true);
      }
 +
 +    public boolean optimizeTntMovement = false;
