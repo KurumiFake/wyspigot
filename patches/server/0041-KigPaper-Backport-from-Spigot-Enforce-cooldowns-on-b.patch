@@ -1,0 +1,42 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: RoccoDev <roccodev.business@gmail.com>
+Date: Sun, 6 Sep 2020 13:41:03 +0200
+Subject: [PATCH] (KigPaper) Backport from Spigot: Enforce cooldowns on book
+ edits
+
+
+diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
+index 73d92dbfb0f4fa668421996638ea3dbdaa1f7194..acb35e8278bc56c45c3c7ee86a752bf48885326e 100644
+--- a/src/main/java/net/minecraft/server/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/PlayerConnection.java
+@@ -104,6 +104,7 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+     private final org.bukkit.craftbukkit.CraftServer server;
+     private int lastTick = MinecraftServer.currentTick;
+     private int lastDropTick = MinecraftServer.currentTick;
++    private int lastBookTick = MinecraftServer.currentTick;
+     private int dropCount = 0;
+     private static final int SURVIVAL_PLACE_DISTANCE_SQUARED = 6 * 6;
+     private static final int CREATIVE_PLACE_DISTANCE_SQUARED = 7 * 7;
+@@ -1968,6 +1969,11 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+ 
+         try { // CraftBukkit
+         if ("MC|BEdit".equals(packetplayincustompayload.a())) {
++            if (this.lastBookTick + 20 > MinecraftServer.currentTick) {
++                this.disconnect("Book edited too quickly! (Attempted server crash?)");
++                return;
++            }
++            this.lastBookTick = MinecraftServer.currentTick;
+             packetdataserializer = new PacketDataSerializer(Unpooled.wrappedBuffer(packetplayincustompayload.b()));
+ 
+             try {
+@@ -2000,6 +2006,10 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+ 
+             return;
+         } else if ("MC|BSign".equals(packetplayincustompayload.a())) {
++            if (this.lastBookTick + 20 > MinecraftServer.currentTick) {
++                this.disconnect("Book edited too quickly! (Attempted server crash?)");
++                return;
++            }
+             packetdataserializer = new PacketDataSerializer(Unpooled.wrappedBuffer(packetplayincustompayload.b()));
+ 
+             try {

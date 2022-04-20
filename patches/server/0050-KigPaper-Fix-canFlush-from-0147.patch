@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: RoccoDev <hey@rocco.dev>
+Date: Fri, 5 Mar 2021 16:02:56 +0100
+Subject: [PATCH] (KigPaper) Fix canFlush from 0147
+
+
+diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
+index 61d7f72e30c1b27a34cbacaa1f187be6df5a6898..529b77dfd5a0c6a0a9e39ab527fa6e9e7a7af25a 100644
+--- a/src/main/java/net/minecraft/server/NetworkManager.java
++++ b/src/main/java/net/minecraft/server/NetworkManager.java
+@@ -86,7 +86,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet> {
+     public void disableAutomaticFlush() {
+         synchronized (this.flushLock) {
+             this.flushPacketsStart = this.packetWrites.get();
+-            this.canFlush = true;
++            this.canFlush = false;
+         }
+     }
+ 

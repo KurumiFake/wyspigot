@@ -1,0 +1,72 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: RoccoDev <hey@rocco.dev>
+Date: Wed, 24 Mar 2021 22:35:51 +0100
+Subject: [PATCH] (KigPaper) Fix CraftingManager memory leak
+
+
+diff --git a/src/main/java/net/minecraft/server/ContainerWorkbench.java b/src/main/java/net/minecraft/server/ContainerWorkbench.java
+index 48d524e54a6b9b13dd6d4b3863d328b97bce6a7e..862ca2a23c832303361e6df725022b12bbdca1f9 100644
+--- a/src/main/java/net/minecraft/server/ContainerWorkbench.java
++++ b/src/main/java/net/minecraft/server/ContainerWorkbench.java
+@@ -9,7 +9,7 @@ public class ContainerWorkbench extends Container {
+ 
+     public InventoryCrafting craftInventory; // CraftBukkit - move initialization into constructor
+     public IInventory resultInventory; // CraftBukkit - move initialization into constructor
+-    private World g;
++    public World g; // KigPaper - make public
+     private BlockPosition h;
+     // CraftBukkit start
+     private CraftInventoryView bukkitEntity = null;
+diff --git a/src/main/java/net/minecraft/server/PlayerList.java b/src/main/java/net/minecraft/server/PlayerList.java
+index 3c2d3197faa7e5212f7c6f9970e56426ae02ade7..e785911ad927609476e02891768d8a5610a42e7e 100644
+--- a/src/main/java/net/minecraft/server/PlayerList.java
++++ b/src/main/java/net/minecraft/server/PlayerList.java
+@@ -26,6 +26,7 @@ import org.bukkit.craftbukkit.chunkio.ChunkIOExecutor;
+ import org.bukkit.Bukkit;
+ import org.bukkit.Location;
+ import org.bukkit.TravelAgent;
++import org.bukkit.craftbukkit.inventory.CraftInventoryView;
+ import org.bukkit.craftbukkit.util.CraftChatMessage;
+ import org.bukkit.entity.Player;
+ import org.bukkit.event.player.PlayerChangedWorldEvent;
+@@ -360,7 +361,8 @@ public abstract class PlayerList {
+         // CraftBukkit start - Quitting must be before we do final save of data, in case plugins need to modify it
+         org.bukkit.craftbukkit.event.CraftEventFactory.handleInventoryCloseEvent(entityplayer);
+ 
+-        PlayerQuitEvent playerQuitEvent = new PlayerQuitEvent(cserver.getPlayer(entityplayer), "\u00A7e" + entityplayer.getName() + " left the game.");
++        Player bukkit = cserver.getPlayer(entityplayer); // KigPaper
++        PlayerQuitEvent playerQuitEvent = new PlayerQuitEvent(bukkit, "\u00A7e" + entityplayer.getName() + " left the game.");
+         cserver.getPluginManager().callEvent(playerQuitEvent);
+         entityplayer.getBukkitEntity().disconnect(playerQuitEvent.getQuitMessage());
+         // CraftBukkit end
+@@ -403,6 +405,12 @@ public abstract class PlayerList {
+ 
+         ChunkIOExecutor.adjustPoolSize(this.getPlayerCount()); // CraftBukkit
+ 
++        // KigPaper start - fix memory leak
++        CraftingManager craftingManager = CraftingManager.getInstance();
++        CraftInventoryView lastView = (CraftInventoryView) craftingManager.lastCraftView;
++        if (lastView != null && lastView.getHandle() instanceof ContainerPlayer && lastView.getPlayer() == bukkit) craftingManager.lastCraftView = null;
++        // KigPaper end
++
+         return playerQuitEvent.getQuitMessage(); // CraftBukkit
+     }
+ 
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 06c96043ba2b677ec5a841046465d43be32f2cda..935ade699bbef25c07598f0c4ae9b39b94af708d 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -1043,6 +1043,13 @@ public final class CraftServer implements Server {
+         worlds.remove(world.getName().toLowerCase());
+         console.worlds.remove(console.worlds.indexOf(handle));
+ 
++        // KigPaper start - fix memory leak
++        CraftingManager craftingManager = CraftingManager.getInstance();
++        CraftInventoryView lastView = (CraftInventoryView) craftingManager.lastCraftView;
++        if (lastView != null && lastView.getHandle() instanceof ContainerWorkbench
++                && ((ContainerWorkbench) lastView.getHandle()).g == handle) craftingManager.lastCraftView = null;
++        // KigPaper end
++
+         File parentFolder = world.getWorldFolder().getAbsoluteFile();
+ 
+         // Synchronized because access to RegionFileCache.a is guarded by this lock.
