@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: RoccoDev <roccodev.business@gmail.com>
+Date: Fri, 7 Aug 2020 23:45:58 +0200
+Subject: [PATCH] (KigPaper) Make the permission message configurable
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 935ade699bbef25c07598f0c4ae9b39b94af708d..edeb878485e8e160e2519a1250c132695620b66a 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -1888,4 +1888,11 @@ public final class CraftServer implements Server {
+     {
+         return spigot;
+     }
++
++    // KigPaper start
++    @Override
++    public String getPermissionMessage() {
++        return configuration.getString("settings.permission-message", ChatColor.RED + "I'm sorry, but you do not have permission to perform this command. Please contact the server administrators if you believe that this is in error.");
++    }
++    // KigPaper end
+ }
