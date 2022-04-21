@@ -5,7 +5,7 @@ Subject: [PATCH] (KigPaper) Add zstd region compression
 
 
 diff --git a/pom.xml b/pom.xml
-index 2d2b97a4341a202512e16bf3df9eafe73397cccc..f035ac19ec636b9eb85875ee50046af927cfbfed 100644
+index 2d2b97a4341a202512e16bf3df9eafe73397cccc..3e394a35428b173075191d20fa19f538c77c5f10 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -100,12 +100,18 @@
@@ -22,7 +22,7 @@ index 2d2b97a4341a202512e16bf3df9eafe73397cccc..f035ac19ec636b9eb85875ee50046af9
 +        <dependency>
 +            <groupId>com.github.luben</groupId>
 +            <artifactId>zstd-jni</artifactId>
-+            <version>1.5.0-4</version>
++            <version>1.5.2-2</version> <!-- WYSpIgot - Update dependencies -->
 +        </dependency>
 +        <!-- // KigPaper end -->
      </dependencies>
