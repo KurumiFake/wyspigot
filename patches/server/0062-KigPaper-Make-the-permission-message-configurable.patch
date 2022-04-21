@@ -5,10 +5,10 @@ Subject: [PATCH] (KigPaper) Make the permission message configurable
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 935ade699bbef25c07598f0c4ae9b39b94af708d..edeb878485e8e160e2519a1250c132695620b66a 100644
+index 3f3331d8d4ab343359cea34430c6afd3372b5199..8d7373f075488047b0a4387b404c4d9792762880 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1888,4 +1888,11 @@ public final class CraftServer implements Server {
+@@ -1874,4 +1874,11 @@ public final class CraftServer implements Server {
      {
          return spigot;
      }

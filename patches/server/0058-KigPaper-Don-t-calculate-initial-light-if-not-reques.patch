@@ -5,15 +5,15 @@ Subject: [PATCH] (KigPaper) Don't calculate initial light if not requested
 
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index a00806ba68ed9ac0147b4fd0aea89f8861f38653..8e69b58f793ee1812b2aa8732ebeab944d85eeca 100644
+index 223a8aa445b82d0e231695e424e27f1a84c9fe41..3ea3d5337a19ee7ad60ee048b067573a049533f9 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
-@@ -610,7 +610,7 @@ public class Chunk {
+@@ -611,7 +611,7 @@ public class Chunk {
              if (chunksection.b(i, j & 15, k) != block) {
                  return null;
              } else {
 -                if (flag) {
 +                if (updateLight && flag) {
                      this.initLighting();
-                 } else {
+                 } else if (updateLight) { // KigPaper - conditional light update
                      int j1 = block.p();

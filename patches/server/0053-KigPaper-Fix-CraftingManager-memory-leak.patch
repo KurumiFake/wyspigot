@@ -53,10 +53,10 @@ index 3c2d3197faa7e5212f7c6f9970e56426ae02ade7..e785911ad927609476e02891768d8a56
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 06c96043ba2b677ec5a841046465d43be32f2cda..935ade699bbef25c07598f0c4ae9b39b94af708d 100644
+index 6e10567b5aefb7795f4c02067f5541941bdfaaaa..3f3331d8d4ab343359cea34430c6afd3372b5199 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1043,6 +1043,13 @@ public final class CraftServer implements Server {
+@@ -1029,6 +1029,13 @@ public final class CraftServer implements Server {
          worlds.remove(world.getName().toLowerCase());
          console.worlds.remove(console.worlds.indexOf(handle));
  
