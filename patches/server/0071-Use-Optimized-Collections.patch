@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Aikar <aikar@aikar.co>
+Date: Wed, 30 Mar 2016 02:13:24 -0400
+Subject: [PATCH] Use Optimized Collections
+
+Swap out CraftBukkit LongObjectHashMap with Long2ObjectOpenHashMap
+Swap out Integer key HashMap for a Int2ObjectOpenHashMap For ChunkProviderServer
+
+Amaranth, the creator of LongObjectHashMap, tested it vs fastutil and determined fastutil to be 3x faster
+and could not create anything faster than fastutil.
+
+These collections are super fast as seen
+http://java-performance.info/hashmap-overview-jdk-fastutil-goldman-sachs-hppc-koloboke-trove-january-2015/
+
+diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
+index dc1c58c5e9e4d541a24daf5a871b605ddc2d3c0c..d696dcd32e9cbdfd8d0933382bc1250f3f7bedef 100644
+--- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
++++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
+@@ -8,6 +8,8 @@ import java.util.Iterator;
+ import java.util.List;
+ import java.util.Set;
+ import java.util.concurrent.ConcurrentHashMap;
++
++import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.Logger;
+ 
+@@ -44,7 +46,7 @@ public class ChunkProviderServer implements IChunkProvider {
+     public boolean forceChunkLoad = false; // CraftBukkit - true -> false
+     // Paper start
+     protected Chunk lastChunkByPos = null;
+-    public LongObjectHashMap<Chunk> chunks = new LongObjectHashMap<Chunk>() {
++    public Long2ObjectOpenHashMap<Chunk> chunks = new Long2ObjectOpenHashMap<Chunk>(8192) {
+         @Override
+         public Chunk get(long key) {
+             if (lastChunkByPos != null && key == lastChunkByPos.chunkKey) {

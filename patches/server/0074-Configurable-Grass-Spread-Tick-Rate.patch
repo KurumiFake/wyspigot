@@ -1,0 +1,94 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: cswhite2000 <18whitechristop@gmail.com>
+Date: Sun, 12 Aug 2018 23:25:46 -0700
+Subject: [PATCH] Configurable Grass Spread Tick Rate
+
+
+diff --git a/patch.diff b/patch.diff
+deleted file mode 100644
+index 1b13b567886c73fdc7f46c3dc290c7aa2b1a82a6..0000000000000000000000000000000000000000
+--- a/patch.diff
++++ /dev/null
+@@ -1,55 +0,0 @@
+-diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
+-index 0a76e5d39..0faa0bcbe 100644
+---- a/src/main/java/net/minecraft/server/Chunk.java
+-+++ b/src/main/java/net/minecraft/server/Chunk.java
+-@@ -32,6 +32,7 @@ public class Chunk {
+-     private boolean h;
+-     public final World world;
+-     public final int[] heightMap;
+-+    public final long chunkKey; // Paper
+-     public final int locX;
+-     public final int locZ;
+-     private boolean k;
+-@@ -141,6 +142,7 @@ public class Chunk {
+-         this.world = world;
+-         this.locX = i;
+-         this.locZ = j;
+-+        this.chunkKey = org.bukkit.craftbukkit.util.LongHash.toLong(this.locX, this.locZ); // Paper
+-         this.heightMap = new int[256];
+- 
+-         for (int k = 0; k < this.entitySlices.length; ++k) {
+-diff --git a/src/main/java/net/minecraft/server/ChunkProviderServer.java b/src/main/java/net/minecraft/server/ChunkProviderServer.java
+-index c4dab42bd..573303e3e 100644
+---- a/src/main/java/net/minecraft/server/ChunkProviderServer.java
+-+++ b/src/main/java/net/minecraft/server/ChunkProviderServer.java
+-@@ -34,7 +34,26 @@ public class ChunkProviderServer implements IChunkProvider {
+-     public IChunkProvider chunkProvider;
+-     private IChunkLoader chunkLoader;
+-     public boolean forceChunkLoad = false; // CraftBukkit - true -> false
+--    public LongObjectHashMap<Chunk> chunks = new LongObjectHashMap<Chunk>();
+-+    // Paper start
+-+    protected Chunk lastChunkByPos = null;
+-+    public LongObjectHashMap<Chunk> chunks = new LongObjectHashMap<Chunk>() {
+-+        @Override
+-+        public Chunk get(long key) {
+-+            if (lastChunkByPos != null && key == lastChunkByPos.chunkKey) {
+-+                return lastChunkByPos;
+-+            }
+-+            return lastChunkByPos = super.get(key);
+-+        }
+-+
+-+        @Override
+-+        public Chunk remove(long key) {
+-+            if (lastChunkByPos != null && key == lastChunkByPos.chunkKey) {
+-+                lastChunkByPos = null;
+-+            }
+-+            return super.remove(key);
+-+        }
+-+    }; // CraftBukkit
+-+    // Paper end
+-     public WorldServer world;
+- 
+-     public ChunkProviderServer(WorldServer worldserver, IChunkLoader ichunkloader, IChunkProvider ichunkprovider) {
+--- 
+-2.18.0
+-
+diff --git a/src/main/java/net/minecraft/server/BlockGrass.java b/src/main/java/net/minecraft/server/BlockGrass.java
+index 557e3579957b41658bd8f4f55a8fe69a24ce13df..8e592961a01b2b3d1d676e2a7a0102203348b6fd 100644
+--- a/src/main/java/net/minecraft/server/BlockGrass.java
++++ b/src/main/java/net/minecraft/server/BlockGrass.java
+@@ -28,6 +28,7 @@ public class BlockGrass extends Block implements IBlockFragilePlantElement {
+     }
+ 
+     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
++        if (world.paperSpigotConfig.grassUpdateRate != 1 && (world.paperSpigotConfig.grassUpdateRate < 1 || (MinecraftServer.currentTick + blockposition.hashCode()) % world.paperSpigotConfig.grassUpdateRate != 0)) { return; } // Paper
+         if (!world.isClientSide) {
+             if (world.getLightLevel(blockposition.up()) < 4 && world.getType(blockposition.up()).getBlock().p() > 2) {
+                 // CraftBukkit start
+diff --git a/src/main/java/org/github/paperspigot/PaperSpigotWorldConfig.java b/src/main/java/org/github/paperspigot/PaperSpigotWorldConfig.java
+index f860492cf7f356ca04e720b810741b22297195b8..86ec6cc29168273646d3e7212589c8ef2e40676e 100644
+--- a/src/main/java/org/github/paperspigot/PaperSpigotWorldConfig.java
++++ b/src/main/java/org/github/paperspigot/PaperSpigotWorldConfig.java
+@@ -398,4 +398,10 @@ public class PaperSpigotWorldConfig
+     {
+         disableTeleportationSuffocationCheck = getBoolean("disable-teleportation-suffocation-check", false);
+     }
++
++    public int grassUpdateRate = 1;
++    private void grassUpdateRate() {
++        grassUpdateRate = Math.max(0, getInt("grass-spread-tick-rate", grassUpdateRate));
++        log("Grass Spread Tick Rate: " + grassUpdateRate);
++    }
+ }

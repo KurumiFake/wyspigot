@@ -1,0 +1,20 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: cswhite2000 <18whitechristop@gmail.com>
+Date: Tue, 14 Aug 2018 21:05:50 -0700
+Subject: [PATCH] Optimize World.isLoaded(BlockPosition)Z
+
+Reduce method invocations for World.isLoaded(BlockPosition)Z
+
+diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
+index 3d03ecc15f05b2c585eb8bea760129308b00ef0e..d23d5685f74f43a25e0792b261acc5a2e3f750f2 100644
+--- a/src/main/java/net/minecraft/server/World.java
++++ b/src/main/java/net/minecraft/server/World.java
+@@ -304,7 +304,7 @@ public abstract class World implements IBlockAccess {
+     }
+ 
+     public boolean isLoaded(BlockPosition blockposition) {
+-        return this.a(blockposition, true);
++        return getChunkIfLoaded(blockposition.getX() >> 4, blockposition.getZ() >> 4) != null; // Paper
+     }
+ 
+     public boolean a(BlockPosition blockposition, boolean flag) {

@@ -1,0 +1,108 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: VytskaLT <VytskaLT@protonmail.com>
+Date: Fri, 4 Dec 2020 13:56:51 +0200
+Subject: [PATCH] Make unknown and internal command messages customisable in
+ PlayerCommandPreprocessEvent
+
+
+diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
+index 1e17c1ea99b326eb43cc2f1f9e70e8f546b6d622..367e1cb1bd534e8a042f4d0f7016683e0630ab18 100644
+--- a/src/main/java/net/minecraft/server/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/PlayerConnection.java
+@@ -1186,7 +1186,10 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+ 
+         CraftPlayer player = this.getPlayer();
+ 
+-        PlayerCommandPreprocessEvent event = new PlayerCommandPreprocessEvent(player, s, new LazyPlayerSet());
++        // SportPaper - make unknown command and internal error messages customisable
++        PlayerCommandPreprocessEvent event = new PlayerCommandPreprocessEvent(player, s, new LazyPlayerSet(),
++                org.spigotmc.SpigotConfig.unknownCommandMessage,
++                org.spigotmc.SpigotConfig.internalErrorMessage);
+         this.server.getPluginManager().callEvent(event);
+ 
+         if (event.isCancelled()) {
+@@ -1195,12 +1198,14 @@ public class PlayerConnection implements PacketListenerPlayIn, IUpdatePlayerList
+         }
+ 
+         try {
+-            if (this.server.dispatchCommand(event.getPlayer(), event.getMessage().substring(1))) {
++            if (this.server.dispatchCommand(event.getPlayer(), event.getMessage().substring(1), event.getUnknownCommandMessage())) { // SportPaper
+                 SpigotTimings.playerCommandTimer.stopTiming(); // Spigot
+                 return;
+             }
+         } catch (org.bukkit.command.CommandException ex) {
+-            player.sendMessage(org.bukkit.ChatColor.RED + "An internal error occurred while attempting to perform this command");
++            // SportPaper start
++            player.sendMessage(event.getInternalErrorMessage());
++            // SportPaper end
+             java.util.logging.Logger.getLogger(PlayerConnection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+             SpigotTimings.playerCommandTimer.stopTiming(); // Spigot
+             return;
+diff --git a/src/main/java/net/minecraft/server/World.java.rej b/src/main/java/net/minecraft/server/World.java.rej
+new file mode 100644
+index 0000000000000000000000000000000000000000..d9688ec4241cc8d7802d8a11b64002ef1cea9148
+--- /dev/null
++++ b/src/main/java/net/minecraft/server/World.java.rej
+@@ -0,0 +1,10 @@
++--- src/main/java/net/minecraft/server/World.java
+++++ src/main/java/net/minecraft/server/World.java
++@@ -1276,6 +1276,7 @@ public abstract class World implements IBlockAccess {
++         // Spigot end
++ 
++         if (entity instanceof EntityItem) return arraylist; // PaperSpigot - Optimize item movement
+++        if (entity instanceof EntityArmorStand && !entity.world.paperSpigotConfig.armorStandEntityLookups) return arraylist; // Paper
++ 
++         double d0 = 0.25D;
++         List list = this.getEntities(entity, axisalignedbb.grow(d0, d0, d0));
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index 71e5d04da3373db13e4004cf3422ccc269bb1d5d..144083caad5890b4c1a5ef4822fed843388604b4 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -637,8 +637,14 @@ public final class CraftServer implements Server {
+         }
+     }
+ 
++    // SportPaper start
+     @Override
+     public boolean dispatchCommand(CommandSender sender, String commandLine) {
++        return dispatchCommand(sender, commandLine, org.spigotmc.SpigotConfig.unknownCommandMessage);
++    }
++    // SportPaper end
++
++    public boolean dispatchCommand(CommandSender sender, String commandLine, String unknownCommandMessage) { // SportPaper - make unknown command message customisable
+         Validate.notNull(sender, "Sender cannot be null");
+         Validate.notNull(commandLine, "CommandLine cannot be null");
+ 
+@@ -669,7 +675,11 @@ public final class CraftServer implements Server {
+             return true;
+         }
+ 
+-        sender.sendMessage(org.spigotmc.SpigotConfig.unknownCommandMessage);
++        // SportPaper start
++        if (unknownCommandMessage != null) {
++            sender.sendMessage(unknownCommandMessage);
++        }
++        // SportPaper end
+ 
+         return false;
+     }
+diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
+index b9d185d99f6432e8636eb573a28f19eccf16258a..aa96bc9a5b11897c2dc8d85442d3273ba94f0f80 100644
+--- a/src/main/java/org/spigotmc/SpigotConfig.java
++++ b/src/main/java/org/spigotmc/SpigotConfig.java
+@@ -190,6 +190,7 @@ public class SpigotConfig
+ 
+     public static String whitelistMessage;
+     public static String unknownCommandMessage;
++    public static String internalErrorMessage;
+     public static String serverFullMessage;
+     public static String outdatedClientMessage = "Outdated client! Please use {0}";
+     public static String outdatedServerMessage = "Outdated server! I\'m still on {0}";
+@@ -207,6 +208,7 @@ public class SpigotConfig
+ 
+         whitelistMessage = transform( getString( "messages.whitelist", "You are not whitelisted on this server!" ) );
+         unknownCommandMessage = transform( getString( "messages.unknown-command", "Unknown command. Type \"/help\" for help." ) );
++        internalErrorMessage = transform( getString( "messages.internal-error", "&cAn internal error occurred while attempting to perform this command" ) );
+         serverFullMessage = transform( getString( "messages.server-full", "The server is full!" ) );
+         outdatedClientMessage = transform( getString( "messages.outdated-client", outdatedClientMessage ) );
+         outdatedServerMessage = transform( getString( "messages.outdated-server", outdatedServerMessage ) );

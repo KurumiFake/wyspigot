@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: cswhite2000 <18whitechristop@gmail.com>
+Date: Sun, 12 Aug 2018 23:32:35 -0700
+Subject: [PATCH] (SportPaper) Fix Cancelling BlockPlaceEvent triggering
+ physics
+
+
+diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
+index 20ed797cecf202832f87dd523a840d0f9f29ae2b..eca8e3d23688f2ca327e10399c0771453771b5a4 100644
+--- a/src/main/java/net/minecraft/server/World.java
++++ b/src/main/java/net/minecraft/server/World.java
+@@ -542,6 +542,7 @@ public abstract class World implements IBlockAccess {
+     }
+ 
+     public void applyPhysics(BlockPosition blockposition, Block block) {
++        if (captureBlockStates) { return; } // Paper - Cancel all physics during placement
+         this.d(blockposition.west(), block);
+         this.d(blockposition.east(), block);
+         this.d(blockposition.down(), block);

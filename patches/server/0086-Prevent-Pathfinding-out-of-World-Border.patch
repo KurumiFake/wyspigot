@@ -1,0 +1,80 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: cswhite2000 <18whitechristop@gmail.com>
+Date: Tue, 14 Aug 2018 23:08:11 -0700
+Subject: [PATCH] Prevent Pathfinding out of World Border
+
+This prevents Entities from trying to run outside of the World Border
+
+diff --git a/patch.diff b/patch.diff
+new file mode 100644
+index 0000000000000000000000000000000000000000..7b9a4d97b277f00063107105d6e758997c799b13
+--- /dev/null
++++ b/patch.diff
+@@ -0,0 +1,35 @@
++diff --git a/src/main/java/net/minecraft/server/NavigationAbstract.java b/src/main/java/net/minecraft/server/NavigationAbstract.java
++index 6c1a8547..11e6a89b 100644
++--- a/src/main/java/net/minecraft/server/NavigationAbstract.java
+++++ b/src/main/java/net/minecraft/server/NavigationAbstract.java
++@@ -38,6 +38,7 @@ public abstract class NavigationAbstract {
++     }
++ 
++     public PathEntity a(BlockPosition blockposition) {
+++        if (!getEntity().getWorld().getWorldBorder().isInBounds(blockposition)) return null; // Paper - don't path out of world border
++         if (!this.b()) {
++             return null;
++         } else {
++@@ -73,6 +74,7 @@ public abstract class NavigationAbstract {
++ 
++             this.c.methodProfiler.a("pathfind");
++             BlockPosition blockposition = (new BlockPosition(this.b)).up();
+++            if (!getEntity().getWorld().getWorldBorder().isInBounds(blockposition)) return null; // Paper - don't path out of world border
++             if (!new org.github.paperspigot.event.entity.EntityPathfindEvent(getEntity().getBukkitEntity(), MCUtil.toLocation(entity.world, blockposition), entity.getBukkitEntity()).callEvent()) { return null; } // Paper
++             int i = (int) (f + 16.0F);
++             ChunkCache chunkcache = new ChunkCache(this.c, blockposition.a(-i, -i, -i), blockposition.a(i, i, i), 0);
++diff --git a/src/main/java/net/minecraft/server/WorldBorder.java b/src/main/java/net/minecraft/server/WorldBorder.java
++index 7ea40468..b1fbcd1b 100644
++--- a/src/main/java/net/minecraft/server/WorldBorder.java
+++++ b/src/main/java/net/minecraft/server/WorldBorder.java
++@@ -29,6 +29,7 @@ public class WorldBorder {
++         this.l = 5;
++     }
++ 
+++    public boolean isInBounds(BlockPosition blockposition) { return a(blockposition); } // Paper - OBFHELPER
++     public boolean a(BlockPosition blockposition) {
++         return (double) (blockposition.getX() + 1) > this.b() && (double) blockposition.getX() < this.d() && (double) (blockposition.getZ() + 1) > this.c() && (double) blockposition.getZ() < this.e();
++     }
++-- 
++2.19.0
++
+diff --git a/src/main/java/net/minecraft/server/NavigationAbstract.java b/src/main/java/net/minecraft/server/NavigationAbstract.java
+index 8ebe58495efda8b15012946b6c13daa72a61e008..1f6a169de1d750c0b6669a3d1c1c59856426c703 100644
+--- a/src/main/java/net/minecraft/server/NavigationAbstract.java
++++ b/src/main/java/net/minecraft/server/NavigationAbstract.java
+@@ -38,6 +38,7 @@ public abstract class NavigationAbstract {
+     }
+ 
+     public PathEntity a(BlockPosition blockposition) {
++        if (!getEntity().getWorld().getWorldBorder().isInBounds(blockposition)) return null; // Paper - don't path out of world border
+         if (!this.b()) {
+             return null;
+         } else {
+@@ -72,6 +73,7 @@ public abstract class NavigationAbstract {
+ 
+             this.c.methodProfiler.a("pathfind");
+             BlockPosition blockposition = (new BlockPosition(this.b)).up();
++            if (!getEntity().getWorld().getWorldBorder().isInBounds(blockposition)) return null; // Paper - don't path out of world border
+             int i = (int) (f + 16.0F);
+             ChunkCache chunkcache = new ChunkCache(this.c, blockposition.a(-i, -i, -i), blockposition.a(i, i, i), 0);
+             PathEntity pathentity = this.j.a((IBlockAccess) chunkcache, (Entity) this.b, entity, f);
+diff --git a/src/main/java/net/minecraft/server/WorldBorder.java b/src/main/java/net/minecraft/server/WorldBorder.java
+index 7ea40468e93e0026f5c39dc41f9c27d7c59d5fc1..b1fbcd1b6f7c27566252e0983fe092ebd03adb23 100644
+--- a/src/main/java/net/minecraft/server/WorldBorder.java
++++ b/src/main/java/net/minecraft/server/WorldBorder.java
+@@ -29,6 +29,7 @@ public class WorldBorder {
+         this.l = 5;
+     }
+ 
++    public boolean isInBounds(BlockPosition blockposition) { return a(blockposition); } // Paper - OBFHELPER
+     public boolean a(BlockPosition blockposition) {
+         return (double) (blockposition.getX() + 1) > this.b() && (double) blockposition.getX() < this.d() && (double) (blockposition.getZ() + 1) > this.c() && (double) blockposition.getZ() < this.e();
+     }

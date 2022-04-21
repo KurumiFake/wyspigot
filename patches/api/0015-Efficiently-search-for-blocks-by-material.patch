@@ -1,0 +1,34 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: cswhite2000 <18whitechristop@gmail.com>
+Date: Tue, 7 Aug 2018 01:38:03 -0700
+Subject: [PATCH] Efficiently search for blocks by material
+
+
+diff --git a/src/main/java/org/bukkit/Chunk.java b/src/main/java/org/bukkit/Chunk.java
+index 0510151768403871d2e34972a389b119159bc62d..65e1e0533ffae3e8a8955ee208246bc0bdc6b520 100644
+--- a/src/main/java/org/bukkit/Chunk.java
++++ b/src/main/java/org/bukkit/Chunk.java
+@@ -4,6 +4,8 @@ import org.bukkit.block.Block;
+ import org.bukkit.block.BlockState;
+ import org.bukkit.entity.Entity;
+ 
++import java.util.Set;
++
+ /**
+  * Represents a chunk of blocks
+  */
+@@ -40,6 +42,14 @@ public interface Chunk {
+      */
+     Block getBlock(int x, int y, int z);
+ 
++    /**
++     * Get all blocks in this chunk that are made of the given {@link Material}
++     *
++     * @param material type of block to search for
++     * @return all blocks found
++     */
++    Set<Block> getBlocks(Material material);
++
+     /**
+      * Capture thread-safe read-only snapshot of chunk data
+      *
