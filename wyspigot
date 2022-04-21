@@ -55,8 +55,9 @@ case "$1" in
         cd "$basedir"
         if [ "$2" != "fast" ]; then
            scripts/upstream.sh
+           ./scripts/apply.sh "$basedir" # wyspigot - ignore when fast
         fi
-        ./scripts/apply.sh "$basedir"
+        #./scripts/apply.sh "$basedir" # moved up
         cd "$basedir"
         mvn -N install
         cd ${FORK_NAME}-API && mvn -e clean install

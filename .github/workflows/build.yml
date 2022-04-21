@@ -22,7 +22,7 @@ jobs:
           git config --global user.name "Github Actions"
           ./wyspigot patch
       - name: paperclip
-        run: ./wyspigot jar
+        run: ./wyspigot jar fast
       - name: release info
         id: relInfo
         run: |
